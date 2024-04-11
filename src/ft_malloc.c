@@ -2,7 +2,7 @@
 
 t_sta    *all;
 
-void    *ft_malloc(size_t size)
+void    *malloc(size_t size)
 {
     t_st    *dest;
     t_st    *m;
@@ -66,7 +66,7 @@ void    *ft_malloc(size_t size)
     return (&m->ptr[len]);
 }
 
-void    ft_free(void *ptr)
+void    free(void *ptr)
 {
     t_st    *dest;
     t_st    *src;
@@ -109,7 +109,7 @@ void    ft_free(void *ptr)
     }
 }
 
-void    *ft_realloc(void *ptr, size_t size)
+void    *realloc(void *ptr, size_t size)
 {
     ft_free(ptr);
     ptr = ft_malloc(size);

@@ -21,9 +21,9 @@ typedef struct m_structa{
     struct m_structa    *next;
 } t_sta;
 
-void    *ft_malloc(size_t size);
-void    ft_free(void *ptr);
-void    *ft_realloc(void *ptr, size_t size);
+void    *malloc(size_t size);
+void    free(void *ptr);
+void    *realloc(void *ptr, size_t size);
 void    show_alloc_mem();
 
 void    ft_replace(void *ptr, t_st *src, t_st *dest, char *str);
