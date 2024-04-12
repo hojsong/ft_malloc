@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"malloc.h": "c",
+		"__hash_table": "c",
+		"array": "c",
+		"memory": "c",
+		"string_view": "c",
+		"unordered_map": "c"
+	}
+}

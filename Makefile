@@ -4,6 +4,8 @@ SRC_DIR = ./src
 LIBFT_DIR = ./libft
 SRC_FILES = ft_malloc.c \
 			ft_tst_util.c \
+			ft_tst_util2.c \
+			ft_tst_util3.c \
 			show_util.c \
 
 LIBFT_FILES = ft_isalpha.c \
@@ -55,7 +57,7 @@ endif
 .DEFAULT_GOAL : all
 
 all: $(NAME)
-	gcc -o main main.c -L. -lft_malloc
+	$(CC) $(CFLAGS) -o a.out main.c -L. -lft_malloc
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJ)
@@ -70,7 +72,7 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 	rm -rf $(LINK_NAME)
-	rm -rf main
+	rm -rf a.out
 
 re: fclean all
 

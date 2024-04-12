@@ -1,15 +1,55 @@
-#include "libft/libft.h" // libft 라이브러리의 헤더 파일 포함
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
+/*   Updated: 2024/04/13 01:28:22 by hojsong          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft/libft.h"
 #include "header/malloc.h"
 
-int main(void) {
-    char *str;
+void	all_free(char **str)
+{
+	size_t	idx;
 
-    // libft_malloc.so를 사용하여 메모리 할당
-    str = ft_strdup("Hellow~~~~\n");
-    ft_putstr_fd(str, 1); // libft의 ft_putstr 함수를 사용하여 문자열 출력
-    show_alloc_mem();
-    free(str); // 할당된 메모리 해제
-    show_alloc_mem();
+	idx = 0;
+	while (idx < 1000)
+	{
+		free(str[idx]);
+		str[idx] = NULL;
+		idx++;
+	}
+	printf("%zu\n", idx);
+	free(str);
+}
 
-    return (0);
+int	main(void)
+{
+	char	*str;
+	char	**str2;
+	int		i;
+
+	str = ft_strdup("Hellow~~~~\n");
+	ft_putstr_fd(str, 1);
+	str2 = malloc(sizeof(char *) * 10011);
+	show_alloc_mem();
+	printf("------------------------------------------\n");
+	i = 0;
+	while (i < 999)
+	{
+		str2[i] = malloc(sizeof(char) * ((i + 1)) * 10);
+		i++;
+	}
+	str2[1000] = NULL;
+	show_alloc_mem();
+	printf("------------------------------------------\n");
+	free(str);
+	all_free(str2);
+	show_alloc_mem();
+	return (0);
 }
