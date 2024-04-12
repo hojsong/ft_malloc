@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:41:01 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 00:59:28 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/13 05:20:27 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <unistd.h>
 # include <sys/resource.h>
 # include <stdio.h>
+
+# define TINY_SIZE	 128
+# define SMALL_SIZE  4096
+# define BLACKS_SIZE 8192
 
 typedef struct m_struct{
 	void			*ptr;
@@ -46,8 +50,8 @@ void	lst_si_init(t_st *src, size_t size);
 
 void	*fail_map(t_st *src);
 void	print_of_easy(int fd, t_st *src, size_t idx, size_t size);
-void	easy_print(int fd, t_st *src);
-void	put_ptr_fd(int fd, t_st *ptr);
+size_t	easy_print(int fd, t_st *src);
+size_t	put_ptr_fd(int fd, t_st *ptr);
 
 void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str);
 t_st	*newlst(size_t size);

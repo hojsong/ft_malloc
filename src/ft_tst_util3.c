@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:39:07 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 00:59:52 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/13 04:02:35 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ void	print_of_easy(int fd, t_st *src, size_t idx, size_t size)
 	put_str_fd(fd, " bytes\n");
 }
 
-void	easy_print(int fd, t_st *src)
+size_t	easy_print(int fd, t_st *src)
 {
 	size_t	idx;
 	size_t	size;
+	size_t	result;
 
+	result = 0;
 	idx = 0;
 	while (idx < src->max_size)
 	{
@@ -55,25 +57,32 @@ void	easy_print(int fd, t_st *src)
 			idx + size < src->size)
 			size++;
 		if (src->si[idx] != -1)
+		{
 			print_of_easy(fd, src, idx, size);
+			result += size;
+		}
 		if (idx + size >= src->size)
 			break ;
 		idx += size;
 	}
+	return (result);
 }
 
-void	put_ptr_fd(int fd, t_st *ptr)
+size_t	put_ptr_fd(int fd, t_st *ptr)
 {
 	t_st	*src;
 	t_st	*dest;
+	size_t	result;
 
+	result = 0;
 	src = ptr;
 	put_hex_num(fd, (unsigned long long)src->ptr, 0);
 	put_str_fd(fd, "\n");
 	while (src)
 	{
-		easy_print(fd, src);
+		result += easy_print(fd, src);
 		dest = src;
 		src = dest->next;
 	}
+	return (result);
 }

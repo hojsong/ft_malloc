@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:56:48 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 01:29:25 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/13 04:24:03 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_st	*newlst(size_t size)
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result == MAP_FAILED)
 		return (fail_map(result));
-	result->max_size = ((size / 8192) + 1) * 8192;
+	result->max_size = ((size / BLACKS_SIZE) + 1) * BLACKS_SIZE;
 	result->size = size;
 	result->ptr = mmap(0, size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);

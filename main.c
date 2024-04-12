@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 01:43:20 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/13 05:21:32 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	all_free(char **str)
 		str[idx] = NULL;
 		idx++;
 	}
-	printf("%zu\n", idx);
 	free(str);
 }
 
@@ -51,5 +50,6 @@ int	main(void)
 	free(str);
 	all_free(str2);
 	show_alloc_mem();
+	printf("------------------------------------------\n");
 	return (0);
 }
