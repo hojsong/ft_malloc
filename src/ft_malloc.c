@@ -12,6 +12,7 @@ void    *malloc(size_t size)
     int     x;
 
     result = NULL;
+    len = 0;
     if (all == NULL)
         all = mmap(0, sizeof(t_sta), PROT_READ | PROT_WRITE, \
             MAP_PRIVATE | MAP_ANONYMOUS, 0, 0 );
@@ -111,8 +112,8 @@ void    free(void *ptr)
 
 void    *realloc(void *ptr, size_t size)
 {
-    ft_free(ptr);
-    ptr = ft_malloc(size);
+    free(ptr);
+    ptr = malloc(size);
     return ptr;
 }
 

@@ -71,7 +71,7 @@ t_st    *newlst(size_t size)
             MAP_PRIVATE | MAP_ANONYMOUS, 0, 0 );
     if (result == MAP_FAILED)
     {
-        ft_free(result);
+        free(result);
         put_str_fd(2, "Mmap Error\n");
         return (NULL);
     }
@@ -81,7 +81,7 @@ t_st    *newlst(size_t size)
             MAP_PRIVATE | MAP_ANONYMOUS, 0, 0 );
     if (result->si == MAP_FAILED)
     {
-        ft_free(result);
+        free(result);
         put_str_fd(2, "Mmap Error\n");
         return (NULL);
     }
