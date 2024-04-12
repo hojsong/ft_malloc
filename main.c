@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 01:28:22 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/13 01:31:44 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int	main(void)
 
 	str = ft_strdup("Hellow~~~~\n");
 	ft_putstr_fd(str, 1);
-	str2 = malloc(sizeof(char *) * 10011);
+	str2 = malloc(sizeof(char *) * 1001);
 	show_alloc_mem();
 	printf("------------------------------------------\n");
 	i = 0;
-	while (i < 999)
+	while (i < 1000)
 	{
 		str2[i] = malloc(sizeof(char) * ((i + 1)) * 10);
 		i++;
