@@ -1,8 +1,8 @@
-#include "../header/ft_malloc.h"
+#include "../header/malloc.h"
 
 t_sta    *all;
 
-int ft_strcmp(char *str1, char *str2)
+int m_ft_strcmp(char *str1, char *str2)
 {
     size_t  idx;
 
@@ -21,7 +21,7 @@ int ft_strcmp(char *str1, char *str2)
     return (0);
 }
 
-size_t  ft_strlen(char *str)
+size_t  m_ft_strlen(char *str)
 {
     size_t  i;
 
@@ -35,7 +35,7 @@ void    put_str_fd(int fd, char *str)
 {
     size_t i;
 
-    i = ft_strlen(str);
+    i = m_ft_strlen(str);
     write(fd, str, i);
 }
 
@@ -73,9 +73,11 @@ void    put_ptr_fd(int fd, t_st *ptr)
 
     if (ptr == NULL)
     {
+        printf("NULL\n");
         put_str_fd(fd, "NULL!\n"); 
         return ;
     }
+    printf("asdasd\n");
     src = ptr;
     put_hex_num(fd, (unsigned long long)src->ptr, 0);
     put_str_fd(fd, "\n");

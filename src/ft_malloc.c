@@ -1,4 +1,4 @@
-#include "../header/ft_malloc.h"
+#include "../header/malloc.h"
 
 t_sta    *all;
 
@@ -78,7 +78,7 @@ void    free(void *ptr)
     {
         if (ptr == src->ptr || (ptr >= src->ptr && ptr < src->ptr + src->max_size))
             {
-                ft_replace(ptr, src, dest, "tiny"); 
+                m_ft_replace(ptr, src, dest, "tiny"); 
                 return ;
             }
         dest = src;
@@ -90,7 +90,7 @@ void    free(void *ptr)
     {
         if (ptr == src->ptr || (ptr >= src->ptr && ptr < src->ptr + src->max_size))
             {
-                ft_replace(ptr, src, dest, "small");
+                m_ft_replace(ptr, src, dest, "small");
                 return ;
             }
         dest = src;
@@ -102,7 +102,7 @@ void    free(void *ptr)
     {
         if (ptr == src->ptr || (ptr >= src->ptr && ptr < src->ptr + src->max_size))
             {
-                ft_replace(ptr, src, dest, "large");
+                m_ft_replace(ptr, src, dest, "large");
                 return ;
             }
         dest = src;

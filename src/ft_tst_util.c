@@ -1,8 +1,8 @@
-#include "../header/ft_malloc.h"
+#include "../header/malloc.h"
 
 t_sta    *all;
 
-void    ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
+void    m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 {
     size_t idx;
     size_t size;
@@ -27,20 +27,20 @@ void    ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
     {
         if (!dest && src->next)
         {
-            if(!ft_strcmp(str,"tiny"))
+            if(!m_ft_strcmp(str,"tiny"))
                 all->tiny = src->next;
-            else if(!ft_strcmp(str,"small"))
+            else if(!m_ft_strcmp(str,"small"))
                 all->small = src->next;
-            else if(!ft_strcmp(str,"large"))
+            else if(!m_ft_strcmp(str,"large"))
                 all->large = src->next;
         }
         else if (!dest && !src->next)
         {
-            if(!ft_strcmp(str,"tiny"))
+            if(!m_ft_strcmp(str,"tiny"))
                 all->tiny = NULL;
-            else if(!ft_strcmp(str,"small"))
+            else if(!m_ft_strcmp(str,"small"))
                 all->small = NULL;
-            else if(!ft_strcmp(str,"large"))
+            else if(!m_ft_strcmp(str,"large"))
                 all->large = NULL;
         }
         else
