@@ -6,6 +6,7 @@ SRC_FILES = ft_malloc.c \
 			ft_tst_util.c \
 			ft_tst_util2.c \
 			ft_tst_util3.c \
+			ft_tst_util4.c \
 			show_util.c \
 
 LIBFT_FILES = ft_isalpha.c \

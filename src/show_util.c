@@ -13,6 +13,8 @@
 #include "../header/malloc.h"
 
 t_sta	*g_all;
+int		g_blakcs_size;
+int		g_blakc_one;
 
 int	m_ft_strcmp(char *str1, char *str2)
 {
@@ -73,6 +75,6 @@ void	put_hex_num(int fd, unsigned long long ptr, int idx)
 	if (idx == 7)
 		put_str_fd(fd, "0x");
 	else
-		put_hex_num(fd, ptr / 16, idx + 1);
-	write(fd, &str[ptr % 16], 1);
+		put_hex_num(fd, ptr / g_blakc_one, idx + 1);
+	write(fd, &str[ptr % g_blakc_one], 1);
 }

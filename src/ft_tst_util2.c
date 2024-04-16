@@ -13,6 +13,8 @@
 #include "../header/malloc.h"
 
 t_sta	*g_all;
+int		g_blakcs_size;
+int		g_blakc_one;
 
 t_st	*t_stinit(t_st *src, size_t size)
 {
@@ -64,8 +66,8 @@ void	*find_mem(t_st *src, size_t size)
 			len = m->size;
 			x = m->si[m->size - 1] + 1;
 			while ((size_t)++i < size)
-				m->si[i + m->size] = x;
-			m->size += size;
+				m->si[i + m->size] = x;	
+			m->size += (resize(size) * g_blakc_one);
 			return (&m->ptr[len]);
 		}
 		dest = m->next;

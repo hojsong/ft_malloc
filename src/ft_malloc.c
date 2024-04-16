@@ -13,16 +13,25 @@
 #include "../header/malloc.h"
 
 t_sta	*g_all;
+int		g_blakcs_size;
+int		g_blakc_one;
 
 void	*malloc(size_t size)
 {
 	t_st	*m;
+	size_t	size2;
 
+	init();
 	if (size <= 0)
 		return (NULL);
 	if (g_all == NULL)
-		g_all = mmap(0, sizeof(t_sta), PROT_READ | PROT_WRITE, \
+	{
+		size2 = sizeof(t_sta);
+		if (size2 < g_blakcs_size)
+			size2 = g_blakcs_size;
+		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
+	}
 	if (size < TINY_SIZE)
 		m = t_stinit(g_all->tiny, size);
 	else if (size < SMALL_SIZE)
@@ -39,6 +48,7 @@ void	free(void *ptr)
 {
 	t_st	*src;
 
+	init();
 	src = g_all->tiny;
 	if (findof_ptr_free(ptr, src, "tiny"))
 		return ;
@@ -52,8 +62,20 @@ void	free(void *ptr)
 
 void	*realloc(void *ptr, size_t size)
 {
+	unsigned char	*result;
+	unsigned char	*str;
+	size_t	idx;
+
+	init();
+	str = (unsigned char *)ptr;
+	result = malloc(size);
+	idx = 0;
+	while (idx < size)
+	{
+		result[idx] = str[idx];
+		idx++;
+	}
 	free(ptr);
-	ptr = malloc(size);
 	return (ptr);
 }
 

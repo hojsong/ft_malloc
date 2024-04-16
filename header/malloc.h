@@ -20,7 +20,6 @@
 
 # define TINY_SIZE	 128
 # define SMALL_SIZE  4096
-# define BLACKS_SIZE 8192
 
 typedef struct m_struct{
 	void			*ptr;
@@ -52,6 +51,9 @@ void	*fail_map(t_st *src);
 void	print_of_easy(int fd, t_st *src, size_t idx, size_t size);
 size_t	easy_print(int fd, t_st *src);
 size_t	put_ptr_fd(int fd, t_st *ptr);
+size_t	resize(size_t size);
+
+void    init(void);
 
 void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str);
 t_st	*newlst(size_t size);

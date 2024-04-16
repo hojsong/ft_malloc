@@ -13,6 +13,8 @@
 #include "../header/malloc.h"
 
 t_sta	*g_all;
+int		g_blakcs_size;
+int		g_blakc_one;
 
 void	*fail_map(t_st *src)
 {
@@ -80,9 +82,25 @@ size_t	put_ptr_fd(int fd, t_st *ptr)
 	put_str_fd(fd, "\n");
 	while (src)
 	{
-		result += easy_print(fd, src);
+		if(src->si)
+			result += easy_print(fd, src);
+		else
+		{
+			print_of_easy(fd, src, 0, src->size);
+			result += src->size;
+		}
 		dest = src;
 		src = dest->next;
 	}
 	return (result);
+}
+
+size_t	resize(size_t size)
+{
+	size_t	result;
+
+	result = size / g_blakc_one;
+	if (size % g_blakc_one)
+		result++;
+	return result;
 }

@@ -13,6 +13,8 @@
 #include "../header/malloc.h"
 
 t_sta	*g_all;
+int		g_blakcs_size;
+int		g_blakc_one;
 
 size_t	si_replace(t_st *src, size_t idx)
 {
@@ -68,6 +70,7 @@ int	si_replace_end(t_st *src, t_st *dest, char *str)
 
 void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 {
+	size_t	size;
 	size_t	idx;
 
 	if (ptr == src)
@@ -81,8 +84,12 @@ void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 		{
 			dest->next = src->next;
 			munmap(src->ptr, src->max_size);
-			munmap(src->si, sizeof(int) * src->max_size);
-			munmap(src, sizeof(t_st));
+			if(src->si)
+				munmap(src->si, sizeof(int) * src->max_size);
+			size = sizeof(t_st);
+			if (size < g_blakcs_size)
+				size = g_blakcs_size;
+			munmap(src, size);
 			src = NULL;
 		}
 	}
@@ -96,9 +103,9 @@ t_st	*newlst(size_t size)
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result == MAP_FAILED)
 		return (fail_map(result));
-	result->max_size = ((size / BLACKS_SIZE) + 1) * BLACKS_SIZE;
-	result->size = size;
-	result->ptr = mmap(0, size, PROT_READ | PROT_WRITE, \
+	result->max_size = ((size / g_blakcs_size) + 1) * g_blakcs_size;
+	result->size = (resize(size) * g_blakc_one);
+	result->ptr = mmap(0, result->max_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result->ptr == MAP_FAILED)
 		return (fail_map(result));
@@ -124,13 +131,13 @@ t_st	*large(size_t size)
 			dest = src;
 			src = dest->next;
 		}
-		src->next = newlst(size);
+		src->next = newLarge(size);
 		dest = src;
 		src = dest->next;
 	}
 	else
 	{
-		src = newlst(size);
+		src = newLarge(size);
 		g_all->large = src;
 	}
 	return (src);
