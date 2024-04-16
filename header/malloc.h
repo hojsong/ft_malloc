@@ -54,6 +54,7 @@ size_t	put_ptr_fd(int fd, t_st *ptr);
 size_t	resize(size_t size);
 
 void    init(void);
+t_st    *newLarge(size_t size);
 
 void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str);
 t_st	*newlst(size_t size);
