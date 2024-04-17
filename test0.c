@@ -3,12 +3,12 @@
 int      main(void)
 {
     int   i;
-    char  *addr;
+    // char  *addr;
 
     i = 0; 
-    while (i < 1024) 
-    {
+    // while (i < 1024) 
+    // {
         i++;
-    } 
+    // } 
     return (0); 
 }

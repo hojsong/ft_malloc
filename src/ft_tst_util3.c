@@ -6,15 +6,15 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:39:07 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 04:02:35 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:40:54 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc.h"
 
 t_sta	*g_all;
-int		g_blakcs_size;
-int		g_blakc_one;
+size_t	g_blakcs_size;
+size_t	g_blakc_one;
 
 void	*fail_map(t_st *src)
 {

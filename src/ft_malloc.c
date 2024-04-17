@@ -6,15 +6,15 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 22:06:12 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/17 15:31:43 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:48:50 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc.h"
 
 t_sta	*g_all;
-int		g_blakcs_size;
-int		g_blakc_one;
+size_t	g_blakcs_size;
+size_t	g_blakc_one;
 
 void	*malloc(size_t size)
 {
@@ -69,14 +69,17 @@ void	*realloc(void *ptr, size_t size)
 	init();
 	str = (unsigned char *)ptr;
 	result = malloc(size);
-	idx = 0;
-	while (idx < size)
+	if (str != NULL)
 	{
-		result[idx] = str[idx];
-		idx++;
+		idx = 0;
+		while (idx < size)
+		{
+			result[idx] = str[idx];
+			idx++;
+		}
 	}
 	free(ptr);
-	return (ptr);
+	return (result);
 }
 
 void	show_alloc_mem(void)

@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:56:48 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/17 15:31:36 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:39:25 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ size_t	si_replace(t_st *src, size_t idx)
 
 	size = 1;
 	if (!src->si)
-	{
-		src->max_size = 1;
-		return (size);
-	}
+		return (src->max_size);
 	while (src->si[idx + size] == src->si[idx] && size < src->max_size)
 	{
 		src->si[idx + size] = -1;

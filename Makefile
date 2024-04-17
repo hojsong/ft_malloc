@@ -1,5 +1,5 @@
 NAME = libft_malloc_$(HOSTTYPE).so
-# LINK_NAME = libft_malloc.so
+LINK_NAME = libft_malloc.so
 SRC_DIR = ./src
 LIBFT_DIR = ./libft
 SRC_FILES = ft_malloc.c \
@@ -48,7 +48,8 @@ SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 LIBFT_SRC = $(addprefix $(LIBFT_DIR)/,$(LIBFT_FILES))
 OBJ = $(SRC:.c=.o) $(LIBFT_SRC:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
+# -fsanitize=undefined
 
 # HOSTTYPE 환경 변수 확인 및 설정
 ifeq ($(HOSTTYPE),)
@@ -59,11 +60,11 @@ endif
 
 all: $(NAME)
 	chmod 777 $(NAME)
-	# $(CC) $(CFLAGS) -o a.out main.c -L. -lft_malloc
+	$(CC) $(CFLAGS) -o a.out main.c -L. -lft_malloc
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJ)
-	# ln -s $(NAME) $(LINK_NAME)
+	ln -s $(NAME) $(LINK_NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
