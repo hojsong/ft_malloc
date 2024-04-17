@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:56:48 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 04:24:03 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/17 15:31:36 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 			if(src->si)
 				munmap(src->si, sizeof(int) * src->max_size);
 			size = sizeof(t_st);
-			if (size < g_blakcs_size)
-				size = g_blakcs_size;
+			if (size < (size_t)g_blakcs_size)
+				size = (size_t)g_blakcs_size;
 			munmap(src, size);
 			src = NULL;
 		}

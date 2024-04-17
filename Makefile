@@ -62,7 +62,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJ)
-	ln -sf $(NAME) $(LINK_NAME)
+	ln -s $(NAME) $(LINK_NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

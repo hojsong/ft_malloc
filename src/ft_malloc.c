@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 22:06:12 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 05:21:55 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/17 15:31:43 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	*malloc(size_t size)
 	if (g_all == NULL)
 	{
 		size2 = sizeof(t_sta);
-		if (size2 < g_blakcs_size)
-			size2 = g_blakcs_size;
+		if (size2 < (size_t)g_blakcs_size)
+			size2 = (size_t)g_blakcs_size;
 		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	}
