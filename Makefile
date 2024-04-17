@@ -1,5 +1,5 @@
 NAME = libft_malloc_$(HOSTTYPE).so
-LINK_NAME = libft_malloc.so
+# LINK_NAME = libft_malloc.so
 SRC_DIR = ./src
 LIBFT_DIR = ./libft
 SRC_FILES = ft_malloc.c \
@@ -58,11 +58,12 @@ endif
 .DEFAULT_GOAL : all
 
 all: $(NAME)
-	$(CC) $(CFLAGS) -o a.out main.c -L. -lft_malloc
+	chmod 777 $(NAME)
+	# $(CC) $(CFLAGS) -o a.out main.c -L. -lft_malloc
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJ)
-	ln -s $(NAME) $(LINK_NAME)
+	# ln -s $(NAME) $(LINK_NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -72,7 +73,7 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
-	rm -rf $(LINK_NAME)
+	# rm -rf $(LINK_NAME)
 	rm -rf a.out
 
 re: fclean all
