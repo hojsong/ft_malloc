@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 22:06:12 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/18 16:23:24 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/18 20:05:13 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_sta	*g_all;
 size_t	g_blakcs_size;
 size_t	g_blakc_one;
+size_t	g_t_st_size;
 
 void	*malloc(size_t size)
 {

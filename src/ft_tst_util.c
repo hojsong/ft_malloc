@@ -6,15 +6,16 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:56:48 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/18 17:06:19 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/18 20:15:59 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc.h"
 
 t_sta	*g_all;
-int		g_blakcs_size;
-int		g_blakc_one;
+size_t	g_blakcs_size;
+size_t	g_blakc_one;
+size_t	g_t_st_size;
 
 size_t	si_replace(t_st *src, size_t idx)
 {
@@ -85,7 +86,7 @@ t_st	*newlst(size_t size)
 {
 	t_st	*result;
 
-	result = mmap(0, sizeof(t_st), PROT_READ | PROT_WRITE, \
+	result = mmap(g_all, sizeof(t_st), PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result == MAP_FAILED)
 		return (fail_map(result));

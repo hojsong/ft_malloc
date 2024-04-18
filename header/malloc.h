@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:41:01 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/13 05:20:27 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/18 20:09:51 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ typedef struct m_struct{
 }	t_st;
 
 typedef struct m_structa{
+	void				**ptrlist;
 	struct m_struct		*tiny;
 	struct m_struct		*small;
 	struct m_struct		*large;
+	size_t				idx;
 	struct m_structa	*next;
 }	t_sta;
 

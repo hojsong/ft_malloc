@@ -4,6 +4,11 @@
         "cstdlib": "c",
         "locale": "c",
         "ostream": "c",
-        "new": "c"
+        "new": "c",
+        "__hash_table": "c",
+        "array": "c",
+        "memory": "c",
+        "string_view": "c",
+        "unordered_map": "c"
     }
 }
