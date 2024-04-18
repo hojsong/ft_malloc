@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:56:48 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/17 16:39:25 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:06:19 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,15 @@ int		g_blakc_one;
 
 size_t	si_replace(t_st *src, size_t idx)
 {
-	size_t	size;
-
-	size = 1;
-	if (!src->si)
+	size_t	x;
+	
+	if (src->si == NULL)
 		return (src->max_size);
-	while (src->si[idx + size] == src->si[idx] && size < src->max_size)
-	{
-		src->si[idx + size] = -1;
-		size++;
-	}
-	src->si[idx] = -1;
-	size = 0;
-	while (size < src->max_size)
-	{
-		if (src->si[size] == -1)
-			size++;
-		else
-			break ;
-	}
-	return (size);
+	x = 0;
+	src->si[idx / 16] = 0;
+	while (x * 16 < src->max_size && src->si[x] == 0)
+		x++;
+	return (x * 16);
 }
 
 int	si_replace_end(t_st *src, t_st *dest, char *str)
@@ -82,7 +71,7 @@ void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 			dest->next = src->next;
 			munmap(src->ptr, src->max_size);
 			if(src->si)
-				munmap(src->si, sizeof(int) * src->max_size);
+				munmap(src->si, sizeof(int) * src->max_size / 16);
 			size = sizeof(t_st);
 			if (size < (size_t)g_blakcs_size)
 				size = (size_t)g_blakcs_size;
@@ -100,13 +89,16 @@ t_st	*newlst(size_t size)
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result == MAP_FAILED)
 		return (fail_map(result));
-	result->max_size = ((size / g_blakcs_size) + 1) * g_blakcs_size;
+	if (size % g_blakcs_size)
+		result->max_size = ((size / g_blakcs_size) + 1) * g_blakcs_size;
+	else
+		result->max_size = ((size / g_blakcs_size)) * g_blakcs_size;
 	result->size = (resize(size) * g_blakc_one);
 	result->ptr = mmap(0, result->max_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result->ptr == MAP_FAILED)
 		return (fail_map(result));
-	result->si = mmap(0, sizeof(int) * result->max_size, \
+	result->si = mmap(0, (sizeof(int) * result->max_size / 16), \
 		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result->si == MAP_FAILED)
 		return (fail_map(result));

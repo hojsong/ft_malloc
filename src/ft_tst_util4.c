@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 22:06:12 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/17 16:45:35 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:59:58 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ size_t	g_blakc_one;
 
 void    init(void)
 {
-    g_blakcs_size = getpagesize();
+	if (getpagesize() == 8192)
+   		g_blakcs_size = getpagesize();
+	else
+		g_blakcs_size = 8192;
     g_blakc_one = sizeof(size_t) * 2;
 }
 

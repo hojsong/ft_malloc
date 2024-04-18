@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 22:06:12 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/17 16:48:50 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:23:24 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,18 @@ void	*realloc(void *ptr, size_t size)
 	size_t	idx;
 
 	init();
-	str = (unsigned char *)ptr;
 	result = malloc(size);
-	if (str != NULL)
+	if (ptr != NULL)
 	{
+		str = (unsigned char *)ptr;
 		idx = 0;
 		while (idx < size)
 		{
 			result[idx] = str[idx];
 			idx++;
 		}
+		free(ptr);
 	}
-	free(ptr);
 	return (result);
 }
 

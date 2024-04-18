@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:02 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/17 16:41:00 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:53:55 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,48 @@ t_st	*size_of_return(size_t size)
 	return (NULL);
 }
 
+int	find_si(t_st *src, size_t size)
+{
+	size_t	idx;
+	size_t	dust;
+	size_t	x;
+
+	idx = 0;
+	while(src->si && idx * 16 < src->max_size && src->si[idx])
+	{
+		dust = src->si[idx] / 16;
+		if (src->si[idx] % 16)
+			dust++;
+		idx += dust;
+		if (src->si[idx] != 0)
+			continue;
+		x = 0;
+		while ((idx + x) * 16 < src->max_size && src->si[idx + x] == 0)
+			x++;
+		if (x * 16 >= size)
+		{
+			src->si[idx] = size;
+			return (idx * 16);
+		}
+		idx++;
+	}
+	return (-1);
+}
+
 void	*find_mem(t_st *src, size_t size)
 {
 	t_st	*dest;
 	t_st	*m;
-	size_t	len;
-	int		i;
 	int		x;
 
-	len = 0;
 	dest = src;
 	while (dest)
 	{
 		m = dest;
-		if (m->size + size <= m->max_size)
+		x = find_si(m, size);
+		if (x != -1)
 		{
-			i = -1;
-			len = m->size;
-			x = m->si[m->size - 1] + 1;
-			while ((size_t)++i < size)
-				m->si[i + m->size] = x;	
-			m->size += (resize(size) * g_blakc_one);
-			return (&m->ptr[len]);
+			return (&m->ptr[x]);
 		}
 		dest = m->next;
 	}
@@ -102,12 +122,11 @@ void	lst_si_init(t_st *src, size_t size)
 	size_t	i;
 
 	i = 0;
-	while (i < src->max_size)
+	while (i * 16 < src->max_size)
 	{
 		if (i < size)
 			src->si[i] = 0;
-		else
-			src->si[i] = -1;
 		i++;
 	}
+	src->si[0] = size;
 }
