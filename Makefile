@@ -1,13 +1,21 @@
 NAME = libft_malloc_$(HOSTTYPE).so
 LINK_NAME = libft_malloc.so
-SRC_DIR = ./src
 LIBFT_DIR = ./libft
-SRC_FILES = ft_malloc.c \
-			ft_tst_util.c \
-			ft_tst_util2.c \
-			ft_tst_util3.c \
-			ft_tst_util4.c \
-			show_util.c \
+
+# SRC_DIR = ./src
+# SRC_FILES = ft_malloc.c \
+# 			ft_tst_util.c \
+# 			ft_tst_util2.c \
+# 			ft_tst_util3.c \
+# 			ft_tst_util4.c \
+# 			show_util.c \
+
+SRC_DIR = ./src2
+SRC_FILES = malloc.c \
+			free.c \
+			show_alloc_mem.c \
+			realloc.c \
+			util.c \
 
 LIBFT_FILES = ft_isalpha.c \
 			ft_toupper.c \
@@ -48,7 +56,8 @@ SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 LIBFT_SRC = $(addprefix $(LIBFT_DIR)/,$(LIBFT_FILES))
 OBJ = $(SRC:.c=.o) $(LIBFT_SRC:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=undefined
+CFLAGS = -Wall -Wextra -Werror 
+# -fsanitize=undefined
 
 # HOSTTYPE 환경 변수 확인 및 설정
 ifeq ($(HOSTTYPE),)

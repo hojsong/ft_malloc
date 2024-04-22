@@ -35,7 +35,6 @@ int     main()
         print("Failed to reallocate memory\n");
         exit(1);
     }
-    print("???\n");
     addr3[127*M] = 42;
     print(addr3);
     return (0);

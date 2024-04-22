@@ -9,6 +9,17 @@
         "array": "c",
         "memory": "c",
         "string_view": "c",
-        "unordered_map": "c"
+        "unordered_map": "c",
+        "__locale": "c",
+        "string": "cpp",
+        "vector": "cpp",
+        "__split_buffer": "c",
+        "bitset": "c",
+        "initializer_list": "c",
+        "iterator": "c",
+        "utility": "c",
+        "malloc2.h": "c",
+        "__config": "c",
+        "cstring": "c"
     }
 }

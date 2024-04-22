@@ -1,7 +1,0 @@
-Hellow~~~~
-TINY  : 0x05318000
-0x05318000 - 0x0531800C : 12 bytes
-Small : NULL
-LARGE : 0x0531B000
-0x0531B000 - 0x0531CF48 : 8008 bytes
-Total : 8020

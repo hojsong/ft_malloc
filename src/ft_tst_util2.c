@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:02 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/18 20:05:13 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/22 07:07:49 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ void	*find_mem(t_st *src, size_t size)
 		m = dest;
 		x = find_si(m, size);
 		if (x != -1)
-		{
 			return (&m->ptr[x]);
-		}
 		dest = m->next;
 	}
 	m->next = newlst(size);

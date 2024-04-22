@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:56:48 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/18 20:15:59 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/22 07:03:40 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,23 @@ void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 t_st	*newlst(size_t size)
 {
 	t_st	*result;
+	size_t	m_size;
 
 	result = mmap(g_all, sizeof(t_st), PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result == MAP_FAILED)
 		return (fail_map(result));
 	if (size % g_blakcs_size)
-		result->max_size = ((size / g_blakcs_size) + 1) * g_blakcs_size;
+		m_size = ((size / g_blakcs_size) + 1) * g_blakcs_size;
 	else
-		result->max_size = ((size / g_blakcs_size)) * g_blakcs_size;
-	result->size = (resize(size) * g_blakc_one);
-	result->ptr = mmap(0, result->max_size, PROT_READ | PROT_WRITE, \
+		m_size = ((size / g_blakcs_size)) * g_blakcs_size;
+	result->size = (resize(size));
+	result->max_size = m_size / 5 * 4;
+	result->ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (result->ptr == MAP_FAILED)
 		return (fail_map(result));
-	result->si = mmap(0, (sizeof(int) * result->max_size / 16), \
-		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
-	if (result->si == MAP_FAILED)
-		return (fail_map(result));
+	result->si = (int *)(&result->ptr[m_size / 5 * 4]);
 	lst_si_init(result, size);
 	result->next = NULL;
 	return (result);

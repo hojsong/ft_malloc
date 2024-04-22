@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tst_util3.c                                     :+:      :+:    :+:   */
+/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/13 00:39:07 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/22 06:49:58 by hojsong          ###   ########.fr       */
+/*   Created: 2024/04/22 09:51:32 by hojsong           #+#    #+#             */
+/*   Updated: 2024/04/22 09:55:39 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc.h"
+#include "../header/malloc2.h"
 
 t_sta	*g_all;
-size_t	g_blakcs_size;
-size_t	g_blakc_one;
-size_t	g_t_st_size;
 
-void	*fail_map(t_st *src)
+static void	put_hex_num(int fd, unsigned long long ptr, int idx)
 {
-	put_str_fd(2, "Mmap Error\n");
-	if (src)
-	{
-		if (src->ptr)
-			munmap(src->ptr, src->max_size);
-		if (src->si)
-			munmap(src->si, sizeof(int) * src->max_size);
-		munmap(src, sizeof(t_st));
-	}
-	return (NULL);
+	char	*str;
+
+	str = "0123456789ABCDEF";
+	if (idx == 7)
+		put_str_fd(fd, "0x");
+	else
+		put_hex_num(fd, ptr / 16, idx + 1);
+	write(fd, &str[ptr % 16], 1);
 }
 
-void	print_of_easy(int fd, t_st *src, size_t idx, size_t size)
+static void	print_of_easy(int fd, t_st *src, size_t idx, size_t size)
 {
 	put_hex_num(fd, (unsigned long long)src->ptr + \
 		(unsigned long long)idx, 0);
@@ -43,14 +38,14 @@ void	print_of_easy(int fd, t_st *src, size_t idx, size_t size)
 	put_str_fd(fd, " bytes\n");
 }
 
-size_t	easy_print(int fd, t_st *src)
+static size_t	easy_print(int fd, t_st *src)
 {
 	size_t	idx;
 	size_t	result;
 
 	result = 0;
 	idx = 0;
-	while (idx * 16 < src->max_size)
+	while (idx * 16 < src->size)
 	{
 		if (src->si[idx])
 			print_of_easy(fd, src, idx * 16, src->si[idx]);
@@ -60,7 +55,7 @@ size_t	easy_print(int fd, t_st *src)
 	return (result);
 }
 
-size_t	put_ptr_fd(int fd, t_st *ptr)
+static size_t	put_ptr_fd(int fd, t_st *ptr)
 {
 	t_st	*src;
 	t_st	*dest;
@@ -85,12 +80,27 @@ size_t	put_ptr_fd(int fd, t_st *ptr)
 	return (result);
 }
 
-size_t	resize(size_t size)
+void    show_alloc_mem(void)
 {
-	size_t	result;
+    size_t	total;
 
-	result = size / g_blakc_one;
-	if (size % g_blakc_one)
-		result++;
-	return result;
+	total = 0;
+	put_str_fd(1, "TINY  : ");
+	if (g_all && g_all->tiny)
+		total += put_ptr_fd(1, g_all->tiny);
+	else
+		put_str_fd(1, "NULL\n");
+	put_str_fd(1, "Small : ");
+	if (g_all && g_all->small)
+		total += put_ptr_fd(1, g_all->small);
+	else
+		put_str_fd(1, "NULL\n");
+	put_str_fd(1, "LARGE : ");
+	if (g_all && g_all->large)
+		total += put_ptr_fd(1, g_all->large);
+	else
+		put_str_fd(1, "NULL\n");
+	put_str_fd(1, "Total : ");
+	put_num_fd(1, total);
+	put_str_fd(1, "\n");
 }
