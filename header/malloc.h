@@ -19,7 +19,7 @@
 # include <stdio.h>
 
 # define TINY_SIZE	 128
-# define SMALL_SIZE  2048
+# define SMALL_SIZE  4096
 
 typedef struct m_struct{
 	void			*ptr;

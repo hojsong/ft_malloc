@@ -67,12 +67,10 @@ void	put_num_fd(int fd, size_t num)
 
 t_st	*size_of_return(size_t size)
 {
-	if (size < TINY_SIZE)
+	if (size <= TINY_SIZE && g_all->tiny)
 		return (g_all->tiny);
-	else if (size < SMALL_SIZE)
+	else if (size <= SMALL_SIZE && g_all->small)
 		return (g_all->small);
-	else if (size > SMALL_SIZE)
-		return (g_all->large);
 	return (NULL);
 }
 

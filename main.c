@@ -41,6 +41,7 @@ int	main(void)
 	i = 0;
 	while (i < 1000)
 	{
+		// printf("i : %d\n", i);
 		str2[i] = malloc(sizeof(char) * ((i + 1)) * 10);
 		i++;
 	}

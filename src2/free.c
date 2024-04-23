@@ -69,7 +69,7 @@ static void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 	{
 		if (si_replace_end(src, dest, str) == 1)
 			dest->next = src->next;
-		size = resize(sizeof(t_st), 8192);
+		size = resize(sizeof(t_st), getpagesize());
 		munmap(src, size);
 		src = NULL;
 	}
@@ -90,7 +90,7 @@ static int findof_ptr_free(void *ptr, t_st *src, char *str)
 			m_ft_replace(ptr, src2, dest, str);
             if (g_all->tiny || g_all->small || g_all->large)
 			    return (1);
-            munmap(g_all, 8192);
+            munmap(g_all, getpagesize());
             g_all = NULL;
             return (1);
 		}

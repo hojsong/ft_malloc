@@ -20,6 +20,12 @@
         "utility": "c",
         "malloc2.h": "c",
         "__config": "c",
-        "cstring": "c"
+        "cstring": "c",
+        "deque": "c",
+        "queue": "c",
+        "random": "c",
+        "span": "c",
+        "format": "c",
+        "ratio": "c"
     }
 }

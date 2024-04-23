@@ -25,7 +25,7 @@ void	*realloc(void *ptr, size_t size)
 	{
 		str = (unsigned char *)ptr;
 		idx = 0;
-		while (idx < size)
+		while (idx < size && str[idx])
 		{
 			result[idx] = str[idx];
 			idx++;

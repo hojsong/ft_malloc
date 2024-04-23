@@ -29,7 +29,7 @@ static t_st	*newLarge(size_t size)
 	size_t	m_size;
 	size_t	x;
 
-	m_size = resize(sizeof(t_st) + size, 8192);
+	m_size = resize(sizeof(t_st) + size, getpagesize());
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (ptr == MAP_FAILED)
@@ -63,7 +63,7 @@ static t_st	*newlst(size_t size)
 	size_t	m_size;
 	size_t	x;
 
-	m_size = resize(sizeof(t_st) + size, 8192);
+	m_size = resize(sizeof(t_st) + size, getpagesize());
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (ptr == MAP_FAILED)
@@ -103,24 +103,20 @@ static t_st	*large(size_t size)
 	return (src);
 }
 
-static t_st	*t_stinit(t_st *src, size_t size)
+static t_st	*t_stinit(size_t size)
 {
-	if (src == NULL)
+	if (size <= TINY_SIZE)
 	{
-		if (size < TINY_SIZE)
-		{
-			g_all->tiny = newlst(size);
-			return (g_all->tiny);
-		}
-		else if (size < SMALL_SIZE)
-		{
-			g_all->small = newlst(size);
-			return (g_all->small);
-		}
-		else if (size >= SMALL_SIZE)
-			return (large(size));
+		g_all->tiny = newlst(size);
+		return (g_all->tiny);
 	}
-	return (NULL);
+	else if (size <= SMALL_SIZE)
+	{
+		g_all->small = newlst(size);
+		return (g_all->small);
+	}
+	else
+		return (large(size));
 }
 
 static int	find_si(t_st *src, size_t size)
@@ -165,15 +161,16 @@ static void	*find_mem(t_st *src, size_t size)
 		dest = m->next;
 	}
 	m->next = newlst(size);
+	if (m->next == NULL)
+		return (NULL);
 	return (m->next->ptr);
 }
 
 void	*malloc(size_t size)
 {
-	char	*str;
+	void	*ptr;
 	t_st	*m;
 	size_t	size2;
-	size_t	idx;
 
 	if (size <= 0)
 		return (NULL);
@@ -183,23 +180,22 @@ void	*malloc(size_t size)
 		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	}
-	if (size < TINY_SIZE)
-		m = t_stinit(g_all->tiny, size);
-	else if (size < SMALL_SIZE)
-		m = t_stinit(g_all->small, size);
-	else
-		m = t_stinit(NULL, size);
-	if (m)
-		return (m->ptr);
 	m = size_of_return(size);
-	str = find_mem(m, size);
-	idx = 0;
-	while (idx < size)
+	if (m == NULL)
 	{
-		str[idx] = 0;
-		idx++;
+		if (size <= TINY_SIZE)
+			m = t_stinit(size);
+		else if (size <= SMALL_SIZE)
+			m = t_stinit(size);
+		else
+			m = t_stinit(size);
+		if (m)
+			return (m->ptr);
+		else
+			return (NULL);
 	}
-	return (str);
+	ptr = find_mem(m, size);
+	return (ptr);
 }
 
 // int main()
