@@ -26,6 +26,15 @@
         "random": "c",
         "span": "c",
         "format": "c",
-        "ratio": "c"
+        "ratio": "c",
+        "__functional_base": "c",
+        "__functional_base_03": "c",
+        "__tuple": "c",
+        "algorithm": "c",
+        "chrono": "c",
+        "type_traits": "c",
+        "functional": "c",
+        "limits": "c",
+        "tuple": "c"
     }
 }

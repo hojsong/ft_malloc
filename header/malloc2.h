@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:41:01 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/22 10:48:10 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/24 12:02:06 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct m_structa{
 }	t_sta;
 
 void	*malloc(size_t size);
-
 void	free(void *ptr);
 void	*realloc(void *ptr, size_t size);
 void    show_alloc_mem(void);
@@ -47,5 +46,7 @@ size_t	m_ft_strlen(char *str);
 size_t	resize(size_t size, size_t x);
 t_st	*size_of_return(size_t size);
 int		m_ft_strcmp(char *str1, char *str2);
+int		get_size(void *ptr);
+
 
 #endif

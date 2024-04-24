@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:40:04 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/22 10:40:22 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/24 12:05:33 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,49 @@
 
 t_sta	*g_all;
 
+void	*o_memmove(void *dst, const void *src, size_t len)
+{
+	size_t			i;
+	unsigned char	*c;
+	unsigned char	*s;
+
+	c = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	i = -1;
+	if (dst == src)
+		return (dst);
+	else if (dst > src)
+	{
+		while (len--)
+			c[len] = s[len];
+	}
+	else
+	{
+		while (++i < len)
+			c[i] = s[i];
+	}
+	return (dst);
+}
+
 void	*realloc(void *ptr, size_t size)
 {
-	unsigned char	*result;
-	unsigned char	*str;
-	size_t	idx;
+	void 	*result;
+	size_t	osiz;
 
-	result = malloc(size);
-	if (ptr != NULL)
+	if (size == 0)
 	{
-		str = (unsigned char *)ptr;
-		idx = 0;
-		while (idx < size && str[idx])
-		{
-			result[idx] = str[idx];
-			idx++;
-		}
 		free(ptr);
+		return (NULL);
 	}
+	if (ptr == NULL)
+		return (malloc(size));
+	osiz = (size_t)get_size(ptr);
+	if (size <= osiz)
+	 	return (ptr);
+	result = malloc(size);
+	if (result == NULL)
+		return (NULL);
+	o_memmove(result, ptr, osiz);
+	free(ptr);
 	return (result);
 }

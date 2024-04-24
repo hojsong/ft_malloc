@@ -6,13 +6,55 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 07:21:39 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/22 10:42:30 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/24 12:08:42 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc2.h"
 
 t_sta	*g_all;
+
+static int	get_size_t_st(t_st *x, void *ptr)
+{
+	t_st	*dest;
+	t_st	*src;
+
+	if (x == NULL)
+		return (0);
+	src = x;
+	while (src)
+	{
+		if (x->si != NULL)
+		{
+			if ((size_t)(ptr - x->ptr) < x->size)
+				return x->si[(ptr - x->ptr)/16];
+		}
+		else
+		{
+			if (ptr == x->ptr)
+				return (x->size);
+		}
+		dest = src;
+		src = dest->next;
+	}
+	return (0);
+}
+
+int	get_size(void *ptr)
+{
+	int	size;
+
+	size = get_size_t_st(g_all->tiny, ptr);
+	if (size > 0)
+		return (size);
+	size = get_size_t_st(g_all->small, ptr);
+	if (size > 0)
+		return (size);
+	size = get_size_t_st(g_all->large, ptr);
+	if (size > 0)
+		return (size);
+	return (0);
+}
 
 size_t	m_ft_strlen(char *str)
 {
