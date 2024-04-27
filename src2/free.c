@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 07:27:24 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/23 18:05:39 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/28 00:32:04 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static size_t	si_replace(t_st *src, size_t idx)
     {
         x++;
     }
-	return (x * 16);
+	return ((x * 16));
 }
 
 static int	si_replace_end(t_st *src, t_st *dest, char *str)
@@ -63,13 +63,15 @@ static void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 	if (ptr == src)
         idx = src->size;
 	else
+	{
 		idx = ptr - src->ptr;
-	idx = si_replace(src, idx);
-	if (idx == src->size)
+		idx = si_replace(src, idx);
+	}
+	if (idx >= src->size)
 	{
 		if (si_replace_end(src, dest, str) == 1)
 			dest->next = src->next;
-		size = resize(sizeof(t_st), getpagesize());
+		size = resize(src->size + sizeof(t_st), getpagesize() * 2);
 		munmap(src, size);
 		src = NULL;
 	}
@@ -85,12 +87,12 @@ static int findof_ptr_free(void *ptr, t_st *src, char *str)
 	while (src2)
 	{
 		if (ptr == src2->ptr || ptr == src || \
-		(ptr >= src2->ptr && ptr < src2->ptr + src2->size))
+		(ptr >= src2->ptr && ptr <= src2->ptr + src2->size))
 		{
 			m_ft_replace(ptr, src2, dest, str);
             if (g_all->tiny || g_all->small || g_all->large)
 			    return (1);
-            munmap(g_all, getpagesize());
+            munmap(g_all, getpagesize() * 2);
             g_all = NULL;
             return (1);
 		}

@@ -56,7 +56,7 @@ SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 LIBFT_SRC = $(addprefix $(LIBFT_DIR)/,$(LIBFT_FILES))
 OBJ = $(SRC:.c=.o) $(LIBFT_SRC:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=undefined -UndefinedBehaviorSanitizer -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=undefined -g3
 
 # HOSTTYPE 환경 변수 확인 및 설정
 ifeq ($(HOSTTYPE),)

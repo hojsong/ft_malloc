@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 05:47:17 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/23 18:06:31 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/28 00:46:22 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_st	*newLarge(size_t size)
 	size_t	m_size;
 	size_t	x;
 
-	m_size = resize(sizeof(t_st) + size, getpagesize());
+	m_size = resize(sizeof(t_st) + size, getpagesize() * 2);
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (ptr == MAP_FAILED)
@@ -63,16 +63,16 @@ static t_st	*newlst(size_t size)
 	size_t	m_size;
 	size_t	x;
 
-	m_size = resize(sizeof(t_st) + size, getpagesize());
+	m_size = resize(sizeof(t_st) + size, getpagesize() * 2);
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (ptr == MAP_FAILED)
 		return (fail_map(ptr, m_size));
 	x = resize(sizeof(t_st), 16);
 	result = &ptr[0];
-	result->size = resize((m_size - x), 16) / 5 * 4;
+	result->size = (m_size - x) / 5 * 4;
 	result->ptr = &ptr[x];
-	result->si = (int *)(&ptr[resize(m_size / 5 * 4, 16)]);
+	result->si = &ptr[x + result->size];
 	lst_idx_init(result, size);
 	result->next = NULL;
 	return (result);
@@ -110,7 +110,7 @@ static t_st	*t_stinit(size_t size)
 		g_all->tiny = newlst(size);
 		return (g_all->tiny);
 	}
-	else if (size <= SMALL_SIZE)
+	else if (size > TINY_SIZE && size <= SMALL_SIZE)
 	{
 		g_all->small = newlst(size);
 		return (g_all->small);
@@ -121,24 +121,28 @@ static t_st	*t_stinit(size_t size)
 
 static int	find_si(t_st *src, size_t size)
 {
+	size_t	dust;
 	size_t	idx;
 	size_t	x;
 
 	idx = 0;
 	while(src->si && idx * 16 < src->size)
 	{
-		idx += resize(src->si[idx], 16) / 16;
+		dust = resize(src->si[idx], 16) / 16;
+		idx += dust;
+		if (idx * 16 + size >= src->size)
+			break;
 		if (src->si[idx] != 0)
 			continue;
 		x = 0;
-		while ((idx + x) < (src->size / 16) && src->si[idx + x] == 0)
+		while (x * 16 < size && (idx + x) * 16 < src->size && src->si[idx + x] == 0)
 			x++;
 		if (x * 16 >= size)
 		{
 			src->si[idx] = size;
 			return (idx * 16);
 		}
-		idx++;
+		idx += x;
 	}
 	return (-1);
 }
@@ -155,9 +159,7 @@ static void	*find_mem(t_st *src, size_t size)
 		m = dest;
 		x = find_si(m, size);
 		if (x != -1)
-		{
 			return (&m->ptr[x]);
-		}
 		dest = m->next;
 	}
 	m->next = newlst(size);
@@ -185,7 +187,7 @@ void	*malloc(size_t size)
 	{
 		if (size <= TINY_SIZE)
 			m = t_stinit(size);
-		else if (size <= SMALL_SIZE)
+		else if (size > TINY_SIZE && size <= SMALL_SIZE)
 			m = t_stinit(size);
 		else
 			m = t_stinit(size);

@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 09:51:32 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/22 09:55:39 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/27 20:32:09 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	print_of_easy(int fd, t_st *src, size_t idx, size_t size)
 		(unsigned long long)idx, 0);
 	put_str_fd(fd, " - ");
 	put_hex_num(fd, (unsigned long long)src->ptr + \
-		(unsigned long long)idx + (unsigned long long)size, 0);
+		(unsigned long long)idx + (unsigned long long)size - 1, 0);
 	put_str_fd(fd, " : ");
 	put_num_fd(fd, size);
 	put_str_fd(fd, " bytes\n");

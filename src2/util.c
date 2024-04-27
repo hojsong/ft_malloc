@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 07:21:39 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/24 12:08:42 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/27 20:45:47 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_st	*size_of_return(size_t size)
 {
 	if (size <= TINY_SIZE && g_all->tiny)
 		return (g_all->tiny);
-	else if (size <= SMALL_SIZE && g_all->small)
+	else if (size > TINY_SIZE && size <= SMALL_SIZE && g_all->small)
 		return (g_all->small);
 	return (NULL);
 }

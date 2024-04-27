@@ -6,12 +6,17 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/22 07:03:28 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/27 20:38:58 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include "header/malloc.h"
+// #include "libft/libft.h"
+// #include "header/malloc.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+void 	show_alloc_mem();
 
 void	all_free(char **str)
 {
@@ -33,8 +38,10 @@ int	main(void)
 	char	**str2;
 	int		i;
 
-	str = ft_strdup("Hellow~~~~\n");
-	ft_putstr_fd(str, 1);
+	// str = ft_strdup("Hellow~~~~\n");
+	// ft_putstr_fd(str, 1);
+	str = strdup("Hellow~~~~\n");
+	printf("%s", str);
 	str2 = malloc(sizeof(char *) * 1001);
 	show_alloc_mem();
 	printf("------------------------------------------\n");
