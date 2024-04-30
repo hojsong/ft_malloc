@@ -6,11 +6,11 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/27 20:38:58 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/04/30 10:25:57 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "libft/libft.h"
+#include "libft/libft.h"
 // #include "header/malloc.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,9 +38,9 @@ int	main(void)
 	char	**str2;
 	int		i;
 
-	// str = ft_strdup("Hellow~~~~\n");
+	str = ft_strdup("Hellow~~~~\n");
 	// ft_putstr_fd(str, 1);
-	str = strdup("Hellow~~~~\n");
+	// // str = strdup("Hellow~~~~\n");
 	printf("%s", str);
 	str2 = malloc(sizeof(char *) * 1001);
 	show_alloc_mem();

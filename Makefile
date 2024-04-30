@@ -10,7 +10,14 @@ LIBFT_DIR = ./libft
 # 			ft_tst_util4.c \
 # 			show_util.c \
 
-SRC_DIR = ./src2
+# SRC_DIR = ./src2
+# SRC_FILES = malloc.c \
+# 			free.c \
+# 			show_alloc_mem.c \
+# 			realloc.c \
+# 			util.c \
+
+SRC_DIR = ./src3
 SRC_FILES = malloc.c \
 			free.c \
 			show_alloc_mem.c \

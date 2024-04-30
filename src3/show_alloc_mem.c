@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 09:51:32 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/28 00:53:33 by hojsong          ###   ########.fr       */
+/*   Created: 2024/04/30 10:01:42 by hojsong           #+#    #+#             */
+/*   Updated: 2024/04/30 10:23:04 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc2.h"
+#include "../header/malloc3.h"
 
 t_sta	*g_all;
 
@@ -42,14 +42,19 @@ size_t	easy_print(int fd, t_st *src)
 {
 	size_t	idx;
 	size_t	result;
+	size_t	x;
 
 	result = 0;
 	idx = 0;
 	while (idx * 16 < src->size)
 	{
 		if (src->si[idx])
-			print_of_easy(fd, src, idx * 16, src->si[idx]);
-		result += src->si[idx];
+		{
+			x = return_size(src, idx);
+			print_of_easy(fd, src, idx * 16, x);
+			idx += (resize(x, 16) / 16) - 1;
+		}
+		result += x;
 		idx++;
 	}
 	return (result);

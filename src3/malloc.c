@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 05:47:17 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/28 00:53:36 by hojsong          ###   ########.fr       */
+/*   Created: 2024/04/30 10:01:57 by hojsong           #+#    #+#             */
+/*   Updated: 2024/04/30 10:24:40 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc2.h"
+#include "../header/malloc3.h"
 
 t_sta	*g_all;
 
@@ -46,31 +46,47 @@ t_st	*newLarge(size_t size)
 void	lst_idx_init(t_st *src, size_t size)
 {
 	size_t	i;
+	size_t	x;
 
+	x = size;
 	i = 0;
 	while(i < src->size / 16)
 	{
 		src->si[i] = 0;
 		i++;
 	}
-	src->si[0] = size;
+	i = 0;
+	while (x)
+	{
+		if (x <= 16)
+		{
+			src->si[i] = x;
+			break;
+		}
+		else
+		{
+			src->si[i] = 116;
+			x -= 16;
+		}
+		i++;
+	}
 }
 
-t_st	*newlst(size_t size)
+t_st	*newlst(size_t size, size_t ma)
 {
 	void	*ptr;
 	t_st	*result;
 	size_t	m_size;
 	size_t	x;
 
-	m_size = resize(sizeof(t_st) + size, getpagesize() * 2);
+	m_size = resize(sizeof(t_st) + size, getpagesize() * ma);
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (ptr == MAP_FAILED)
 		return (fail_map(ptr, m_size));
 	x = resize(sizeof(t_st), 16);
 	result = &ptr[0];
-	result->size = (m_size - x) / 5 * 4;
+	result->size = (m_size - x) / 17 * 16;
 	result->ptr = &ptr[x];
 	result->si = &ptr[x + result->size];
 	lst_idx_init(result, size);
@@ -107,12 +123,12 @@ t_st	*t_stinit(size_t size)
 {
 	if (size <= TINY_SIZE)
 	{
-		g_all->tiny = newlst(size);
+		g_all->tiny = newlst(size, 4);
 		return (g_all->tiny);
 	}
 	else if (size > TINY_SIZE && size <= SMALL_SIZE)
 	{
-		g_all->small = newlst(size);
+		g_all->small = newlst(size, 21);
 		return (g_all->small);
 	}
 	else
@@ -121,25 +137,36 @@ t_st	*t_stinit(size_t size)
 
 int	find_si(t_st *src, size_t size)
 {
-	size_t	dust;
 	size_t	idx;
 	size_t	x;
+	size_t	ma;
 
+	ma = size;
 	idx = 0;
 	while(src->si && idx * 16 < src->size)
 	{
-		dust = resize(src->si[idx], 16) / 16;
-		idx += dust;
-		if (idx * 16 + size >= src->size)
-			break;
-		if (src->si[idx] != 0)
-			continue;
+		if (idx * 16 < src->size && src->si[idx])
+			idx++;
 		x = 0;
-		while (x * 16 < size && (idx + x) * 16 < src->size && src->si[idx + x] == 0)
+		while (x * 16 < ma && (idx + x) * 16 < src->size && src->si[idx + x] == 0)
 			x++;
-		if (x * 16 >= size)
+		if (x * 16 >= ma)
 		{
-			src->si[idx] = size;
+			x = 0;
+			while(ma)
+			{
+				if (ma <= 16)
+				{
+					src->si[idx + x] = ma;
+					break ;
+				}
+				else
+				{
+					src->si[idx + x] = 116;
+					ma -= 16;
+				}
+				x++;
+			}
 			return (idx * 16);
 		}
 		idx += x;
@@ -162,7 +189,10 @@ void	*find_mem(t_st *src, size_t size)
 			return (&m->ptr[x]);
 		dest = m->next;
 	}
-	m->next = newlst(size);
+	if (size <= TINY_SIZE)
+		m->next = newlst(size, 4);
+	else
+		m->next = newlst(size, 21);
 	if (m->next == NULL)
 		return (NULL);
 	return (m->next->ptr);

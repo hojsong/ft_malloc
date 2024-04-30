@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 07:27:24 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/28 00:55:17 by hojsong          ###   ########.fr       */
+/*   Created: 2024/04/30 10:02:03 by hojsong           #+#    #+#             */
+/*   Updated: 2024/04/30 10:13:52 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc2.h"
+#include "../header/malloc3.h"
 
 t_sta	*g_all;
 
@@ -21,7 +21,17 @@ size_t	si_replace(t_st *src, size_t idx)
 	if (src->si == NULL)
 		return (src->size);
 	x = 0;
-	src->si[idx / 16] = 0;
+	while (1)
+	{
+		if (src->si[idx / 16 + x] <= 16)
+		{
+			src->si[idx / 16 + x] = 0;
+			break;
+		}
+		src->si[idx / 16 + x] = 0;
+		x++;
+	}
+	x = 0;
 	while (x * 16 < src->size && src->si[x] == 0)
     {
         x++;
