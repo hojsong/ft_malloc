@@ -89,6 +89,7 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 	rm -rf $(LINK_NAME)
+	rm -rf a.out*
 
 re: fclean all
 
