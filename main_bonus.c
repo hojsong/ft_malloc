@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/08 11:36:45 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/08 11:17:39 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include "header/malloc3.h"
-// #include "header/malloc_bonus.h"
+// #include "header/malloc3.h"
+#include "header/malloc_bonus.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -27,7 +27,6 @@ void	all_free(char **str)
 		free(str[idx]);
 		str[idx] = NULL;
 		idx++;
-		usleep(1000);
 	}
 	free(str);
 }
@@ -51,14 +50,13 @@ int	main(void)
 		// printf("i : %d\n", i);
 		str2[i] = malloc(sizeof(char) * ((i + 1)) * 10);
 		i++;
-		usleep(1000);
 	}
 	str2[1000] = NULL;
 	show_alloc_mem();
 	printf("------------------------------------------\n");
 	free(str);
 	all_free(str2);
-	show_alloc_mem();
+	show_alloc_mem_ex();
 	printf("------------------------------------------\n");
 	return (0);
 }
