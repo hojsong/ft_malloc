@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/08 11:17:39 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:29:52 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,47 +16,75 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <pthread.h>
+
+char **strings;
+int string_count = 0;
+pthread_mutex_t mutex;
 
 void	all_free(char **str)
 {
-	size_t	idx;
-
-	idx = 0;
-	while (idx < 1000)
-	{
-		free(str[idx]);
-		str[idx] = NULL;
-		idx++;
-	}
-	free(str);
-}
-
-int	main(void)
-{
-	char	*str;
-	char	**str2;
-	int		i;
-
-	str = ft_strdup("Hellow~~~~\n");
-	ft_putstr_fd(str, 1);
-	// str = strdup("Hellow~~~~\n");
-	// printf("%s", str);
-	str2 = malloc(sizeof(char *) * 1001);
-	show_alloc_mem();
-	printf("------------------------------------------\n");
+	size_t i;
 	i = 0;
-	while (i < 1000)
+
+	while (str && str[i])
 	{
-		// printf("i : %d\n", i);
-		str2[i] = malloc(sizeof(char) * ((i + 1)) * 10);
+		free(str[i]);
 		i++;
 	}
-	str2[1000] = NULL;
+	if (str)
+		free(str);
+}
+
+void *thread_function(void *arg) {
+	int i;
+
+	arg = NULL;
+	i = 0;
+    while (i < 1000) {
+        char *str = malloc(10 * (i + 1));
+        pthread_mutex_lock(&mutex);
+        if (str == NULL) {
+            printf("Error: malloc failed\n");
+            return NULL;
+        }
+        strings[string_count++] = str;
+        pthread_mutex_unlock(&mutex);
+		usleep(100);
+		i++;
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_t threads[5];
+    strings = malloc(sizeof(char *) * 5001);
+	strings[5000] = NULL;
+    pthread_mutex_init(&mutex, NULL);
+	int	i;
+
+	i = 0;
+    while (i < 5){
+        if (pthread_create(&threads[i], NULL, thread_function, NULL) != 0) {
+            printf("Error: thread creation failed\n");
+            return 1;
+        }
+		i++;
+    }
+
+	i = 0;
+    while (i < 5){
+        if (pthread_join(threads[i], NULL) != 0) {
+            printf("Error: thread join failed\n");
+            return 1;
+        }
+		i++;
+    }
 	show_alloc_mem();
-	printf("------------------------------------------\n");
-	free(str);
-	all_free(str2);
+	sleep(5);
+    all_free(strings);
 	show_alloc_mem_ex();
-	printf("------------------------------------------\n");
-	return (0);
+    pthread_mutex_destroy(&mutex);
+    printf("All strings allocated and freed successfully\n");
+    return 0;
 }

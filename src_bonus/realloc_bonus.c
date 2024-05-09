@@ -6,15 +6,11 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:47 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/08 11:23:00 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:20:34 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc_bonus.h"
-
-t_sta			*g_all;
-t_stack         *g_stack;
-pthread_mutex_t	g_gardner;
 
 void	*o_memmove(void *dst, const void *src, size_t len)
 {

@@ -74,7 +74,7 @@ LIBFT_SRC = $(addprefix $(LIBFT_DIR)/,$(LIBFT_FILES))
 OBJ = $(SRC:.c=.o) $(LIBFT_SRC:.c=.o)
 OBJ_BO = $(SRC_BO:.c=.o) $(LIBFT_SRC:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 # HOSTTYPE 환경 변수 확인 및 설정
 ifeq ($(HOSTTYPE),)
@@ -93,7 +93,7 @@ endif
 
 all: $(NAME_CUR)
 	chmod 777 $(NAME_CUR)
-	$(CC) $(CFLAGS) -o a.out main.c -L. -lft_malloc
+	$(CC) $(CFLAGS) -o man.out main.c -L. -lft_malloc
 
 $(NAME_CUR): $(OBJ_CUR)
 	$(CC) $(CFLAGS) -shared -o $(NAME_CUR) $(OBJ_CUR)
@@ -109,13 +109,13 @@ clean:
 fclean: clean
 	rm -rf $(NAME) $(NAME_BO)
 	rm -rf $(LINK_NAME)
-	rm -rf a.out*
+	rm -rf man.out bonus.out
 
 re: fclean all
 
 bonus :
 	make BONUS=1 $(NAME_BO)
 	chmod 777 $(NAME_BO)
-	$(CC) $(CFLAGS) -o a.out main_bonus.c -L. -lft_malloc
+	$(CC) $(CFLAGS) -o bonus.out main_bonus.c -L. -lft_malloc
 
 .PHONY: all clean fclean re bonus

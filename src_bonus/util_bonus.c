@@ -6,22 +6,18 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:31 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/08 11:21:58 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:29:30 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../header/malloc_bonus.h"
 
-t_sta			*g_all;
-pthread_mutex_t	g_gardner;
-t_stack         *g_stack;
-
 void	init_lcok(void)
 {
 	if (g_stack == NULL)
 		pthread_mutex_init(&g_gardner, NULL);
-	pthread_mutex_unlock(&g_gardner);
+	pthread_mutex_lock(&g_gardner);
 }
 
 size_t return_size(t_st *x, size_t idx)

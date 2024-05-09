@@ -6,15 +6,12 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:42 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/08 11:23:21 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:20:38 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc_bonus.h"
 
-t_sta			*g_all;
-pthread_mutex_t	g_gardner;
-t_stack         *g_stack;
 
 void	put_hex_num(int fd, unsigned long long ptr, int idx)
 {

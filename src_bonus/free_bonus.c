@@ -6,15 +6,11 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:02:03 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/08 11:23:06 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:20:27 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc_bonus.h"
-
-t_sta			*g_all;
-t_stack         *g_stack;
-pthread_mutex_t	g_gardner;
 
 size_t	si_replace(t_st *src, size_t idx)
 {
@@ -119,6 +115,7 @@ void	free(void *ptr)
 	t_st	*src;
 
 	init_lcok();
+	free_lst(ptr);
 	src = g_all->tiny;
 	if (findof_ptr_free(ptr, src, "tiny"))
 		;
@@ -134,6 +131,5 @@ void	free(void *ptr)
 				;
 		}
 	}
-	free_lst(ptr);
 	pthread_mutex_unlock(&g_gardner);
 }

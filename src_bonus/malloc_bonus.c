@@ -6,15 +6,11 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:57 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/08 11:33:49 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:26:03 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/malloc_bonus.h"
-
-t_sta			*g_all;
-t_stack         *g_stack;
-pthread_mutex_t	g_gardner;
 
 void	*fail_map(t_st *src, size_t size)
 {
@@ -237,7 +233,8 @@ void	*malloc(size_t size)
 		}
 	}
 	ptr = find_mem(m, size);
-	malloc_lst(ptr, size);
+	if (ptr)
+		malloc_lst(ptr, size);
 	pthread_mutex_unlock(&g_gardner);
 	return (ptr);
 }
