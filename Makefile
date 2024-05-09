@@ -109,7 +109,7 @@ clean:
 fclean: clean
 	rm -rf $(NAME) $(NAME_BO)
 	rm -rf $(LINK_NAME)
-	rm -rf man.out bonus.out
+	rm -rf man.out* bonus.out*
 
 re: fclean all
 
