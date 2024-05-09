@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:57 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/09 18:26:03 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 20:12:42 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	*malloc(size_t size)
 	if (size <= 0)
 		return (NULL);
 	init_lcok();
-	if (g_all == NULL)
+	while (g_all == NULL || g_all == MAP_FAILED)
 	{
 		size2 = sizeof(t_sta);
 		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \

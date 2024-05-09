@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:31 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/09 18:29:30 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/10 04:22:22 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 
 void	init_lcok(void)
 {
-	if (g_stack == NULL)
+	if (g_stack == NULL && g_stack == NULL)
+	{
 		pthread_mutex_init(&g_gardner, NULL);
+		stack_size = 0;
+	}
 	pthread_mutex_lock(&g_gardner);
+	usleep(100);
 }
 
 size_t return_size(t_st *x, size_t idx)

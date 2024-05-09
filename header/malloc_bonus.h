@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:41:01 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/09 18:20:21 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/10 04:22:03 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,18 @@ typedef struct m_struct{
 typedef struct m_stack{
 	void			*ptr;
 	size_t			size;
-	time_t			start_time;
-	time_t			end_time;
+	char			*start_time;
+	char			*end_time;
 	struct m_stack	*next;
 }	t_stack;
+
+// typedef struct m_stack{
+// 	unsigned long long	ptr;
+// 	size_t				size;
+// 	time_t				start_time;
+// 	time_t				end_time;
+// 	struct m_stack		*next;
+// }	t_stack;
 
 typedef struct m_structa{
 	struct m_struct		*tiny;
@@ -48,6 +56,7 @@ typedef struct m_structa{
 t_sta			*g_all;
 t_stack         *g_stack;
 pthread_mutex_t	g_gardner;
+size_t			stack_size;
 
 void	init_lcok(void);
 void    free_lst(void *ptr);

@@ -6,12 +6,11 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/09 18:29:52 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:02:58 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-// #include "header/malloc3.h"
 #include "header/malloc_bonus.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -57,14 +56,14 @@ void *thread_function(void *arg) {
 }
 
 int main() {
-    pthread_t threads[5];
-    strings = malloc(sizeof(char *) * 5001);
-	strings[5000] = NULL;
+    pthread_t threads[3];
+    strings = malloc(sizeof(char *) * 3001);
+	strings[3000] = NULL;
     pthread_mutex_init(&mutex, NULL);
 	int	i;
 
 	i = 0;
-    while (i < 5){
+    while (i < 3){
         if (pthread_create(&threads[i], NULL, thread_function, NULL) != 0) {
             printf("Error: thread creation failed\n");
             return 1;
@@ -73,7 +72,7 @@ int main() {
     }
 
 	i = 0;
-    while (i < 5){
+    while (i < 3){
         if (pthread_join(threads[i], NULL) != 0) {
             printf("Error: thread join failed\n");
             return 1;
@@ -81,7 +80,7 @@ int main() {
 		i++;
     }
 	show_alloc_mem();
-	sleep(5);
+	// sleep(3);
     all_free(strings);
 	show_alloc_mem_ex();
     pthread_mutex_destroy(&mutex);
