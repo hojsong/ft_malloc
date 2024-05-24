@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:57 by hojsong           #+#    #+#             */
-/*   Updated: 2024/04/30 10:24:40 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/24 20:19:45 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_st	*newLarge(size_t size)
 	size_t	m_size;
 	size_t	x;
 
-	m_size = resize(sizeof(t_st) + size, getpagesize() * 2);
+	m_size = resize(sizeof(t_st) + size, getpagesize());
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (ptr == MAP_FAILED)
@@ -190,9 +190,9 @@ void	*find_mem(t_st *src, size_t size)
 		dest = m->next;
 	}
 	if (size <= TINY_SIZE)
-		m->next = newlst(size, 4);
+		m->next = newlst(size, TINY_PAGE);
 	else
-		m->next = newlst(size, 21);
+		m->next = newlst(size, SMALL_PAGE);
 	if (m->next == NULL)
 		return (NULL);
 	return (m->next->ptr);
@@ -208,7 +208,7 @@ void	*malloc(size_t size)
 		return (NULL);
 	if (g_all == NULL)
 	{
-		size2 = sizeof(t_sta);
+		size2 = resize(sizeof(t_sta), getpagesize());
 		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	}

@@ -25,7 +25,16 @@ SRC_FILES = malloc.c \
 			realloc.c \
 			util.c \
 
-SRC_BONUS_DIR = 	./src_bonus
+# SRC_BONUS_DIR = 	./src_bonus
+# SRC_BONUS_FILES =	malloc_bonus.c \
+# 					free_bonus.c \
+# 					show_alloc_mem_bonus.c \
+# 					realloc_bonus.c \
+# 					util_bonus.c \
+# 					show_alloc_mem_ex_bonus.c \
+
+
+SRC_BONUS_DIR = 	./src2_bonus
 SRC_BONUS_FILES =	malloc_bonus.c \
 					free_bonus.c \
 					show_alloc_mem_bonus.c \
@@ -74,7 +83,8 @@ LIBFT_SRC = $(addprefix $(LIBFT_DIR)/,$(LIBFT_FILES))
 OBJ = $(SRC:.c=.o) $(LIBFT_SRC:.c=.o)
 OBJ_BO = $(SRC_BO:.c=.o) $(LIBFT_SRC:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror 
+# -fsanitize=address -g3
 
 # HOSTTYPE 환경 변수 확인 및 설정
 ifeq ($(HOSTTYPE),)
@@ -84,9 +94,13 @@ endif
 ifdef BONUS
 	OBJ_CUR = $(OBJ_BO)
 	NAME_CUR = $(NAME_BO)
+	OUT_CUR = bonus.out
+	MAIN_CUR = main_bonus.c
 else
 	OBJ_CUR = $(OBJ)
 	NAME_CUR = $(NAME)
+	OUT_CUR = man.out
+	MAIN_CUR = main.c
 endif
 
 .DEFAULT_GOAL : all
@@ -99,7 +113,7 @@ $(NAME_CUR): $(OBJ_CUR)
 	$(CC) $(CFLAGS) -shared -o $(NAME_CUR) $(OBJ_CUR)
 	rm -rf $(LINK_NAME)
 	ln -s $(NAME_CUR) $(LINK_NAME)
-
+	
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 

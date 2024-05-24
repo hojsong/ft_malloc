@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:42 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/24 18:30:57 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/24 20:10:00 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void    new_stack(void *ptr, size_t size)
         str = ctime(&t);
     ssize = m_ft_strlen(str);
     stack = new_stack_one(m_ptr, 0, sizeof(t_stack), ssize);
-    while (stack->ptr != (unsigned long long)ptr)
-        stack->ptr = (unsigned long long)ptr;
+    while (stack->ptr != ptr)
+        stack->ptr = ptr;
     stack->size = size;
     str[ssize - 1] = '\0';
     stack_dup(stack->start_time, str);
@@ -129,7 +129,7 @@ void    malloc_lst(void *ptr, size_t size)
         {
             if(src->size == 0 && src->ptr == 0)
             {
-                src->ptr = (unsigned long long)ptr;
+                src->ptr = ptr;
                 src->size = size;
                 t = time(NULL);
                 while (t == -1)
@@ -161,7 +161,7 @@ void    free_lst(void   *ptr)
     src = g_stack;
     while (src)
     {
-        if(src->ptr == (unsigned long long)ptr && src->end_time[0] == '\0')
+        if(src->ptr == ptr && src->end_time[0] == '\0')
         {
             t = time(NULL);
             while (t == -1)
@@ -188,7 +188,7 @@ void    print_show_ptr(t_stack *src)
         (unsigned long long)(src->size - 1), 0);
     write (1, " ", 1);
     put_num_fd(1, src->size);
-    write (1, " ", 1);
+    put_str_fd(1, " bytes ");
     put_str_fd(1, src->start_time);
     if (src->end_time)
     {

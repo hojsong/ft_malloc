@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:02:03 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/24 20:19:02 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/24 20:18:32 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc3.h"
-
-t_sta	*g_all;
+#include "../header/malloc_bonus.h"
 
 size_t	si_replace(t_st *src, size_t idx)
 {
@@ -106,11 +104,7 @@ int findof_ptr_free(void *ptr, t_st *src, char *str)
 		{
 			m_ft_replace(ptr, src2, dest, str);
             if (g_all->tiny || g_all->small || g_all->large)
-			{
-				ptr = NULL;
 			    return (1);
-			}
-			ptr = NULL;
             munmap(g_all, getpagesize());
             g_all = NULL;
             return (1);
@@ -125,13 +119,45 @@ void	free(void *ptr)
 {
 	t_st	*src;
 
+	init_lcok();
+	free_lst(ptr);
 	src = g_all->tiny;
-	if (findof_ptr_free(ptr, src, "tiny"))
+	if (findof_ptr_free(ptr, src, "tiny")){
+		pthread_mutex_unlock(&g_gardner);
 		return ;
+	}
 	src = g_all->small;
-	if (findof_ptr_free(ptr, src, "small"))
+	if (findof_ptr_free(ptr, src, "small")){
+		pthread_mutex_unlock(&g_gardner);
 		return ;
+	}
 	src = g_all->large;
-	if (findof_ptr_free(ptr, src, "large"))
+	if (findof_ptr_free(ptr, src, "large")){
+		pthread_mutex_unlock(&g_gardner);
 		return ;
+	}
 }
+
+// void	free(void *ptr)
+// {
+// 	t_st	*src;
+
+// 	init_lcok();
+// 	free_lst(ptr);
+// 	src = g_all->tiny;
+// 	if (findof_ptr_free(ptr, src, "tiny"))
+// 		;
+// 	else
+// 	{
+// 		src = g_all->small;
+// 		if (findof_ptr_free(ptr, src, "small"))
+// 			;
+// 		else
+// 		{
+// 			src = g_all->large;
+// 			if (findof_ptr_free(ptr, src, "large"))
+// 				;
+// 		}
+// 	}
+// 	pthread_mutex_unlock(&g_gardner);
+// }

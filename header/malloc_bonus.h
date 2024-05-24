@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:41:01 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/10 04:22:03 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/24 20:18:04 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define TINY_SIZE	 128
 # define SMALL_SIZE  2048
+# define TINY_PAGE	 4
+# define SMALL_PAGE  21
 
 typedef struct m_struct{
 	void			*ptr;
@@ -31,11 +33,11 @@ typedef struct m_struct{
 }	t_st;
 
 typedef struct m_stack{
-	void			*ptr;
-	size_t			size;
-	char			*start_time;
-	char			*end_time;
-	struct m_stack	*next;
+	void				*ptr;
+	size_t				size;
+	char				*start_time;
+	char				*end_time;
+	struct m_stack		*next;
 }	t_stack;
 
 // typedef struct m_stack{

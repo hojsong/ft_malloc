@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:57 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/24 18:41:59 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/24 20:19:46 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_st	*newLarge(size_t size)
 	size_t	m_size;
 	size_t	x;
 
-	m_size = resize(sizeof(t_st) + size, getpagesize() * 2);
+	m_size = resize(sizeof(t_st) + size, getpagesize());
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	if (ptr == MAP_FAILED)
@@ -121,12 +121,12 @@ t_st	*t_stinit(size_t size)
 {
 	if (size <= TINY_SIZE)
 	{
-		g_all->tiny = newlst(size, 4);
+		g_all->tiny = newlst(size, TINY_PAGE);
 		return (g_all->tiny);
 	}
 	else if (size > TINY_SIZE && size <= SMALL_SIZE)
 	{
-		g_all->small = newlst(size, 21);
+		g_all->small = newlst(size, SMALL_PAGE);
 		return (g_all->small);
 	}
 	else

@@ -1,1 +1,0 @@
-./a.out | grep "0 bytes" | wc -l

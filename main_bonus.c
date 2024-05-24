@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/09 19:02:58 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/05/24 20:13:06 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 char **strings;
 int string_count = 0;
 pthread_mutex_t mutex;
+int maxsize = 1000;
+int threadsize = 5;
 
 void	all_free(char **str)
 {
@@ -40,30 +42,30 @@ void *thread_function(void *arg) {
 
 	arg = NULL;
 	i = 0;
-    while (i < 1000) {
+    while (i < maxsize) {
         char *str = malloc(10 * (i + 1));
-        pthread_mutex_lock(&mutex);
         if (str == NULL) {
             printf("Error: malloc failed\n");
             return NULL;
         }
+        pthread_mutex_lock(&mutex);
         strings[string_count++] = str;
         pthread_mutex_unlock(&mutex);
-		usleep(100);
 		i++;
     }
     return NULL;
 }
 
 int main() {
-    pthread_t threads[3];
-    strings = malloc(sizeof(char *) * 3001);
-	strings[3000] = NULL;
+    threadsize = 5;
+    pthread_t threads[5];
+    strings = malloc(sizeof(char *) * ((maxsize * threadsize) +1));
+	strings[(maxsize * threadsize)] = NULL;
     pthread_mutex_init(&mutex, NULL);
 	int	i;
 
 	i = 0;
-    while (i < 3){
+    while (i < threadsize){
         if (pthread_create(&threads[i], NULL, thread_function, NULL) != 0) {
             printf("Error: thread creation failed\n");
             return 1;
@@ -71,8 +73,10 @@ int main() {
 		i++;
     }
 
+    sleep(2);
+
 	i = 0;
-    while (i < 3){
+    while (i < threadsize){
         if (pthread_join(threads[i], NULL) != 0) {
             printf("Error: thread join failed\n");
             return 1;
