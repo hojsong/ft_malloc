@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 00:56:56 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/24 20:13:06 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/06/02 04:34:44 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int main() {
 		i++;
     }
 	show_alloc_mem();
-	// sleep(3);
+	sleep(3);
     all_free(strings);
 	show_alloc_mem_ex();
     pthread_mutex_destroy(&mutex);

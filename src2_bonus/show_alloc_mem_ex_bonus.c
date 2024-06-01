@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:42 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/24 20:10:00 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/06/02 04:37:59 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void    malloc_lst(void *ptr, size_t size)
                 while (str == NULL)
                     str = ctime(&t);
                 str[m_ft_strlen(str) - 1] = '\0';
-                src->start_time = str;
+                stack_dup(src->start_time, str);
                 return ;
             }
             if (src->next == NULL)
