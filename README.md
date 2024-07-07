@@ -45,14 +45,3 @@ c
 
 
 void show_alloc_mem(void);
-Building and Running
-Provide instructions on how to build and run your library, including any dependencies or prerequisites.
-
-Example
-Provide a simple example of how to use your library.
-
-Contributing
-Instructions for how others can contribute to your project.
-
-License
-Specify the license under which your project is released.
