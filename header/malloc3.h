@@ -21,7 +21,7 @@
 # define TINY_SIZE	 128
 # define SMALL_SIZE  2048
 # define TINY_PAGE	 4
-# define SMALL_PAGE  21
+# define SMALL_PAGE  91
 
 typedef struct m_struct{
 	void			*ptr;
@@ -50,6 +50,5 @@ t_st	*size_of_return(size_t size);
 int		m_ft_strcmp(char *str1, char *str2);
 size_t	get_size(void *ptr);
 size_t	return_size(t_st *x, size_t idx);
-
 
 #endif

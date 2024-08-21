@@ -210,6 +210,7 @@ void	*malloc(size_t size)
 		size2 = sizeof(t_sta);
 		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
+		g_all->stack_size = 0;
 	}
 	m = size_of_return(size);
 	if (m == NULL)

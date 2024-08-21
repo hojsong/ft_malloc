@@ -107,7 +107,7 @@ endif
 
 all: $(NAME_CUR)
 	chmod 777 $(NAME_CUR)
-	$(CC) $(CFLAGS) -o man.out main.c -L. -lft_malloc
+	$(CC) $(CFLAGS) -o $(MAIN_CUR) main.c -L. -lft_malloc
 
 $(NAME_CUR): $(OBJ_CUR)
 	$(CC) $(CFLAGS) -shared -o $(NAME_CUR) $(OBJ_CUR)
