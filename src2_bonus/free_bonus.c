@@ -105,8 +105,6 @@ int findof_ptr_free(void *ptr, t_st *src, char *str)
 			m_ft_replace(ptr, src2, dest, str);
             if (g_all->tiny || g_all->small || g_all->large)
 			    return (1);
-            munmap(g_all, getpagesize());
-            g_all = NULL;
             return (1);
 		}
 		dest = src2;

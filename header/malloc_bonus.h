@@ -52,13 +52,12 @@ typedef struct m_structa{
 	struct m_struct		*tiny;
 	struct m_struct		*small;
 	struct m_struct		*large;
-	struct m_structa	*next;
+	struct m_stack      *g_stack;
+	size_t				stack_size;
 }	t_sta;
 
 t_sta			*g_all;
-t_stack         *g_stack;
 pthread_mutex_t	g_gardner;
-size_t			stack_size;
 
 void	init_lcok(void);
 void    free_lst(void *ptr);
@@ -78,6 +77,5 @@ t_st	*size_of_return(size_t size);
 int		m_ft_strcmp(char *str1, char *str2);
 size_t	get_size(void *ptr);
 size_t	return_size(t_st *x, size_t idx);
-
 
 #endif

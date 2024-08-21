@@ -15,10 +15,10 @@
 
 void	init_lcok(void)
 {
-	if (g_stack == NULL && g_stack == NULL)
+	if (g_all == NULL || g_all->g_stack == NULL)
 	{
 		pthread_mutex_init(&g_gardner, NULL);
-		stack_size = 0;
+		g_all->stack_size = 0;
 	}
 	pthread_mutex_lock(&g_gardner);
 	usleep(100);

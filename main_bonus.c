@@ -84,7 +84,7 @@ int main() {
 		i++;
     }
 	show_alloc_mem();
-	// sleep(3);
+	sleep(3);
     all_free(strings);
 	show_alloc_mem_ex();
     pthread_mutex_destroy(&mutex);
