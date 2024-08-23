@@ -14,8 +14,8 @@ SRC_FILES = malloc.c \
 			util.c \
 
 # SRC_BONUS_DIR = 	./src_bonus
-SRC_BONUS_DIR = 	./src2_bonus
-# SRC_BONUS_DIR = 	./src3_bonus
+# SRC_BONUS_DIR = 	./src2_bonus
+SRC_BONUS_DIR = 	./src3_bonus
 
 SRC_BONUS_FILES =	malloc_bonus.c \
 					free_bonus.c \
@@ -66,7 +66,8 @@ OBJ = $(SRC:.c=.o) $(LIBFT_SRC:.c=.o)
 OBJ_BO = $(SRC_BO:.c=.o) $(LIBFT_SRC:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror
+#  -fsanitize=address -g3
 
 # HOSTTYPE 환경 변수 확인 및 설정
 ifeq ($(HOSTTYPE),)

@@ -97,7 +97,7 @@ t_st	*large(size_t size)
 	t_st	*src;
 	t_st	*dest;
 
-	src = g_all->large;
+	src = g_global.g_all->large;
 	if (src)
 	{
 		while (src->next)
@@ -112,7 +112,7 @@ t_st	*large(size_t size)
 	else
 	{
 		src = newLarge(size);
-		g_all->large = src;
+		g_global.g_all->large = src;
 	}
 	return (src);
 }
@@ -121,13 +121,13 @@ t_st	*t_stinit(size_t size)
 {
 	if (size <= TINY_SIZE)
 	{
-		g_all->tiny = newlst(size, TINY_PAGE);
-		return (g_all->tiny);
+		g_global.g_all->tiny = newlst(size, TINY_PAGE);
+		return (g_global.g_all->tiny);
 	}
 	else if (size > TINY_SIZE && size <= SMALL_SIZE)
 	{
-		g_all->small = newlst(size, SMALL_PAGE);
-		return (g_all->small);
+		g_global.g_all->small = newlst(size, SMALL_PAGE);
+		return (g_global.g_all->small);
 	}
 	else
 		return (large(size));
@@ -188,9 +188,9 @@ void	*find_mem(t_st *src, size_t size)
 		dest = m->next;
 	}
 	if (size <= TINY_SIZE)
-		m->next = newlst(size, 4);
+		m->next = newlst(size, TINY_PAGE);
 	else
-		m->next = newlst(size, 21);
+		m->next = newlst(size, SMALL_PAGE);
 	if (m->next == NULL)
 		return (NULL);
 	return (m->next->ptr);
@@ -205,10 +205,10 @@ void	*malloc(size_t size)
 	if (size <= 0)
 		return (NULL);
 	init_lcok();
-	while (g_all == NULL || g_all == MAP_FAILED)
+	while (g_global.g_all == NULL || g_global.g_all == MAP_FAILED)
 	{
 		size2 = sizeof(t_sta);
-		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
+		g_global.g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	}
 	m = size_of_return(size);
@@ -223,19 +223,19 @@ void	*malloc(size_t size)
 		if (m)
 		{
 			malloc_lst(m->ptr, size);
-			pthread_mutex_unlock(&g_gardner);
+			pthread_mutex_unlock(&g_global.g_gardner);
 			return (m->ptr);
 		}
 		else
 		{
-			pthread_mutex_unlock(&g_gardner);
+			pthread_mutex_unlock(&g_global.g_gardner);
 			return (NULL);
 		}
 	}
 	ptr = find_mem(m, size);
 	if (ptr)
 		malloc_lst(ptr, size);
-	pthread_mutex_unlock(&g_gardner);
+	pthread_mutex_unlock(&g_global.g_gardner);
 	return (ptr);
 }
 
@@ -250,26 +250,26 @@ void	*malloc(size_t size)
 // 	str = malloc(100);
 // 	str2 = malloc(100);
 
-// 	// while (idx < g_all->tiny->size / 16)
+// 	// while (idx < g_global.g_all->tiny->size / 16)
 // 	// {
-// 	// 	if (g_all->tiny->si[idx])
-// 	// 		printf("%zu : %d\n", idx, g_all->tiny->si[idx]);
+// 	// 	if (g_global.g_all->tiny->si[idx])
+// 	// 		printf("%zu : %d\n", idx, g_global.g_all->tiny->si[idx]);
 // 	// 	idx ++;
 // 	// }
 // 	// printf("size : %zu\n",sizeof(t_st));
-// 	printf("tiny : %p\n", (void *)g_all->tiny);
-// 	printf("ptr  : %p\n", (void *)g_all->tiny->ptr);
-// 	printf("si   : %p\n", (void *)g_all->tiny->si);
+// 	printf("tiny : %p\n", (void *)g_global.g_all->tiny);
+// 	printf("ptr  : %p\n", (void *)g_global.g_all->tiny->ptr);
+// 	printf("si   : %p\n", (void *)g_global.g_all->tiny->si);
 // 	printf("str  : %p\n", (void *)str);
 // 	printf("str2 : %p\n", (void *)str2);
 // 	free(str);
 // 	str3 = malloc(100);
 // 	printf("str3 : %p\n", (void *)str3);
-// 	printf("tiny : %p\n", (void *)g_all->tiny);
+// 	printf("tiny : %p\n", (void *)g_global.g_all->tiny);
 // 	printf("str  : %p\n", (void *)str);
 // 	show_alloc_mem();
 // 	free(str2);
-// 	printf("tiny : %p\n", (void *)g_all->tiny);
+// 	printf("tiny : %p\n", (void *)g_global.g_all->tiny);
 // 	printf("str2  : %p\n", (void *)str2);
 // 	free(str3);
 // 	show_alloc_mem();

@@ -46,12 +46,12 @@ void    stack_add_back(t_stack *stack)
     t_stack *src;
     t_stack *dest;
 
-    if (g_stack == NULL)
+    if (g_global.g_stack == NULL)
     {
-        g_stack = stack;
+        g_global.g_stack = stack;
         return ;
     }
-    src = g_stack;
+    src = g_global.g_stack;
     while(src)
     {
         if (src->next == NULL)
@@ -109,7 +109,7 @@ void    new_stack(void *ptr, size_t size)
         dest = src;
         idx++;
     }
-    stack_size += idx;
+    g_global.stack_size += idx;
     dest->next = NULL;
     stack_add_back(stack);
 }
@@ -122,10 +122,10 @@ void    malloc_lst(void *ptr, size_t size)
     time_t  t;
     char    *str;
     
-    if (g_stack)
+    if (g_global.g_stack)
     {
-        src = g_stack;
-        while (src && g_stack)
+        src = g_global.g_stack;
+        while (src && g_global.g_stack)
         {
             if(src->size == 0 && src->ptr == 0)
             {
@@ -158,7 +158,7 @@ void    free_lst(void   *ptr)
     time_t  t;
     char    *str;
     
-    src = g_stack;
+    src = g_global.g_stack;
     while (src)
     {
         if(src->ptr == ptr && src->end_time[0] == '\0')
@@ -207,12 +207,12 @@ void    show_size(int type)
 
     i = 0;
     ee = 0;
-    if (g_stack == NULL)
+    if (g_global.g_stack == NULL)
         return ;
-    src = g_stack;
-    while (src != g_stack)
-        src = g_stack;
-    while (src != NULL && i < stack_size)
+    src = g_global.g_stack;
+    while (src != g_global.g_stack)
+        src = g_global.g_stack;
+    while (src != NULL && i < g_global.stack_size)
     {
         if (src->ptr != 0)
         {
@@ -254,5 +254,5 @@ void    show_alloc_mem_ex(void)
     show_size(1);
     put_str_fd(1, "Large : \n");
     show_size(2);
-	pthread_mutex_unlock(&g_gardner);
+	pthread_mutex_unlock(&g_global.g_gardner);
 }

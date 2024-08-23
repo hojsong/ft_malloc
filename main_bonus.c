@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-// #include "header/malloc_bonus3.h"
-#include "header/malloc_bonus2.h"
+#include "header/malloc_bonus3.h"
+// #include "header/malloc_bonus2.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -39,12 +39,14 @@ void	all_free(char **str)
 }
 
 void *thread_function(void *arg) {
-	int i;
+	unsigned long long x;
+    int i;
 
 	arg = NULL;
-	i = 0;
+	x = (unsigned long long)arg;
+    i = (int)x;
     while (i < maxsize) {
-        char *str = malloc(10 * (i + 1));
+        char *str = malloc(16 * (i + 1));
         if (str == NULL) {
             printf("Error: malloc failed\n");
             return NULL;

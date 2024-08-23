@@ -91,22 +91,22 @@ void    show_alloc_mem(void)
 	init_lcok();
 	total = 0;
 	put_str_fd(1, "TINY  : ");
-	if (g_all && g_all->tiny)
-		total += put_ptr_fd(1, g_all->tiny);
+	if (g_global.g_all && g_global.g_all->tiny)
+		total += put_ptr_fd(1, g_global.g_all->tiny);
 	else
 		put_str_fd(1, "NULL\n");
 	put_str_fd(1, "Small : ");
-	if (g_all && g_all->small)
-		total += put_ptr_fd(1, g_all->small);
+	if (g_global.g_all && g_global.g_all->small)
+		total += put_ptr_fd(1, g_global.g_all->small);
 	else
 		put_str_fd(1, "NULL\n");
 	put_str_fd(1, "LARGE : ");
-	if (g_all && g_all->large)
-		total += put_ptr_fd(1, g_all->large);
+	if (g_global.g_all && g_global.g_all->large)
+		total += put_ptr_fd(1, g_global.g_all->large);
 	else
 		put_str_fd(1, "NULL\n");
 	put_str_fd(1, "Total : ");
 	put_num_fd(1, total);
 	put_str_fd(1, "\n");
-	pthread_mutex_unlock(&g_gardner);
+	pthread_mutex_unlock(&g_global.g_gardner);
 }

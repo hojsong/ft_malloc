@@ -42,21 +42,21 @@ int	si_replace_end(t_st *src, t_st *dest, char *str)
 	if (!dest && src->next)
 	{
 		if (!m_ft_strcmp(str, "tiny"))
-			g_all->tiny = src->next;
+			g_global.g_all->tiny = src->next;
 		else if (!m_ft_strcmp(str, "small"))
-			g_all->small = src->next;
+			g_global.g_all->small = src->next;
 		else if (!m_ft_strcmp(str, "large"))
-			g_all->large = src->next;
+			g_global.g_all->large = src->next;
 		return (0);
 	}
 	else if (!dest && !src->next)
 	{
 		if (!m_ft_strcmp(str, "tiny"))
-			g_all->tiny = NULL;
+			g_global.g_all->tiny = NULL;
 		else if (!m_ft_strcmp(str, "small"))
-			g_all->small = NULL;
+			g_global.g_all->small = NULL;
 		else if (!m_ft_strcmp(str, "large"))
-			g_all->large = NULL;
+			g_global.g_all->large = NULL;
 		return (0);
 	}
 	return (1);
@@ -103,10 +103,10 @@ int findof_ptr_free(void *ptr, t_st *src, char *str)
 		(ptr >= src2->ptr && ptr <= src2->ptr + src2->size))
 		{
 			m_ft_replace(ptr, src2, dest, str);
-            if (g_all->tiny || g_all->small || g_all->large)
+            if (g_global.g_all->tiny || g_global.g_all->small || g_global.g_all->large)
 			    return (1);
-            munmap(g_all, getpagesize());
-            g_all = NULL;
+            munmap(g_global.g_all, getpagesize());
+            g_global.g_all = NULL;
             return (1);
 		}
 		dest = src2;
@@ -121,19 +121,19 @@ void	free(void *ptr)
 
 	init_lcok();
 	free_lst(ptr);
-	src = g_all->tiny;
+	src = g_global.g_all->tiny;
 	if (findof_ptr_free(ptr, src, "tiny")){
-		pthread_mutex_unlock(&g_gardner);
+		pthread_mutex_unlock(&g_global.g_gardner);
 		return ;
 	}
-	src = g_all->small;
+	src = g_global.g_all->small;
 	if (findof_ptr_free(ptr, src, "small")){
-		pthread_mutex_unlock(&g_gardner);
+		pthread_mutex_unlock(&g_global.g_gardner);
 		return ;
 	}
-	src = g_all->large;
+	src = g_global.g_all->large;
 	if (findof_ptr_free(ptr, src, "large")){
-		pthread_mutex_unlock(&g_gardner);
+		pthread_mutex_unlock(&g_global.g_gardner);
 		return ;
 	}
 }
@@ -144,20 +144,20 @@ void	free(void *ptr)
 
 // 	init_lcok();
 // 	free_lst(ptr);
-// 	src = g_all->tiny;
+// 	src = g_global.g_all->tiny;
 // 	if (findof_ptr_free(ptr, src, "tiny"))
 // 		;
 // 	else
 // 	{
-// 		src = g_all->small;
+// 		src = g_global.g_all->small;
 // 		if (findof_ptr_free(ptr, src, "small"))
 // 			;
 // 		else
 // 		{
-// 			src = g_all->large;
+// 			src = g_global.g_all->large;
 // 			if (findof_ptr_free(ptr, src, "large"))
 // 				;
 // 		}
 // 	}
-// 	pthread_mutex_unlock(&g_gardner);
+// 	pthread_mutex_unlock(&g_global.g_gardner);
 // }

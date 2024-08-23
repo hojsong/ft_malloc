@@ -15,12 +15,12 @@
 
 void	init_lcok(void)
 {
-	if (g_stack == NULL)
+	if (g_global.g_stack == NULL)
 	{
-		pthread_mutex_init(&g_gardner, NULL);
-		stack_size = 0;
+		pthread_mutex_init(&g_global.g_gardner, NULL);
+		g_global.stack_size = 0;
 	}
-	pthread_mutex_lock(&g_gardner);
+	pthread_mutex_lock(&g_global.g_gardner);
 	usleep(100);
 }
 
@@ -75,13 +75,13 @@ size_t	get_size(void *ptr)
 {
 	size_t	size;
 
-	size = get_size_t_st(g_all->tiny, ptr);
+	size = get_size_t_st(g_global.g_all->tiny, ptr);
 	if (size > 0)
 		return (size);
-	size = get_size_t_st(g_all->small, ptr);
+	size = get_size_t_st(g_global.g_all->small, ptr);
 	if (size > 0)
 		return (size);
-	size = get_size_t_st(g_all->large, ptr);
+	size = get_size_t_st(g_global.g_all->large, ptr);
 	if (size > 0)
 		return (size);
 	return (0);
@@ -140,10 +140,10 @@ void	put_num_fd(int fd, size_t num)
 
 t_st	*size_of_return(size_t size)
 {
-	if (size <= TINY_SIZE && g_all->tiny)
-		return (g_all->tiny);
-	else if (size > TINY_SIZE && size <= SMALL_SIZE && g_all->small)
-		return (g_all->small);
+	if (size <= TINY_SIZE && g_global.g_all->tiny)
+		return (g_global.g_all->tiny);
+	else if (size > TINY_SIZE && size <= SMALL_SIZE && g_global.g_all->small)
+		return (g_global.g_all->small);
 	return (NULL);
 }
 

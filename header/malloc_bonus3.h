@@ -55,18 +55,18 @@ typedef struct m_structa{
 	struct m_structa	*next;
 }	t_sta;
 
-// typedef struct m_glo{
-// 	t_sta			*g_all;
-// 	pthread_mutex_t	g_gardner;
-// 	t_stack     	*g_stack;
-// 	size_t			stack_size;
-// } t_glo;
+typedef struct m_glo{
+	t_sta			*g_all;
+	pthread_mutex_t	g_gardner;
+	t_stack     	*g_stack;
+	size_t			stack_size;
+} t_glo;
 
-// t_glo		g_global;
-t_sta			*g_all;
-pthread_mutex_t	g_gardner;
-t_stack     	*g_stack;
-size_t			stack_size;
+t_glo		g_global;
+// t_sta			*g_all;
+// pthread_mutex_t	g_gardner;
+// t_stack     	*g_stack;
+// size_t			stack_size;
 
 void	init_lcok(void);
 void    free_lst(void *ptr);
