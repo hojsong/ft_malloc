@@ -6,11 +6,11 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:42 by hojsong           #+#    #+#             */
-/*   Updated: 2024/08/22 07:47:10 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/08/23 13:30:47 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc_bonus.h"
+#include "../header/malloc_bonus3.h"
 
 void    stack_dup(char *str, char *str2)
 {
@@ -46,12 +46,12 @@ void    stack_add_back(t_stack *stack)
     t_stack *src;
     t_stack *dest;
 
-    if (g_all->g_stack == NULL)
+    if (g_stack == NULL)
     {
-        g_all->g_stack = stack;
+        g_stack = stack;
         return ;
     }
-    src = g_all->g_stack;
+    src = g_stack;
     while(src)
     {
         if (src->next == NULL)
@@ -90,8 +90,8 @@ void    new_stack(void *ptr, size_t size)
         str = ctime(&t);
     ssize = m_ft_strlen(str);
     stack = new_stack_one(m_ptr, 0, sizeof(t_stack), ssize);
-    while (stack->ptr != (unsigned long long)ptr)
-        stack->ptr = (unsigned long long)ptr;
+    while (stack->ptr != ptr)
+        stack->ptr = ptr;
     stack->size = size;
     str[ssize - 1] = '\0';
     stack_dup(stack->start_time, str);
@@ -109,7 +109,7 @@ void    new_stack(void *ptr, size_t size)
         dest = src;
         idx++;
     }
-    g_all->stack_size += idx;
+    stack_size += idx;
     dest->next = NULL;
     stack_add_back(stack);
 }
@@ -122,14 +122,14 @@ void    malloc_lst(void *ptr, size_t size)
     time_t  t;
     char    *str;
     
-    if (g_all->g_stack)
+    if (g_stack)
     {
-        src = g_all->g_stack;
-        while (src && g_all->g_stack)
+        src = g_stack;
+        while (src && g_stack)
         {
             if(src->size == 0 && src->ptr == 0)
             {
-                src->ptr = (unsigned long long)ptr;
+                src->ptr = ptr;
                 src->size = size;
                 t = time(NULL);
                 while (t == -1)
@@ -138,7 +138,7 @@ void    malloc_lst(void *ptr, size_t size)
                 while (str == NULL)
                     str = ctime(&t);
                 str[m_ft_strlen(str) - 1] = '\0';
-                src->start_time = str;
+                stack_dup(src->start_time, str);
                 return ;
             }
             if (src->next == NULL)
@@ -158,10 +158,10 @@ void    free_lst(void   *ptr)
     time_t  t;
     char    *str;
     
-    src = g_all->g_stack;
+    src = g_stack;
     while (src)
     {
-        if(src->ptr == (unsigned long long)ptr && src->end_time[0] == '\0')
+        if(src->ptr == ptr && src->end_time[0] == '\0')
         {
             t = time(NULL);
             while (t == -1)
@@ -188,7 +188,7 @@ void    print_show_ptr(t_stack *src)
         (unsigned long long)(src->size - 1), 0);
     write (1, " ", 1);
     put_num_fd(1, src->size);
-    write (1, " ", 1);
+    put_str_fd(1, " bytes ");
     put_str_fd(1, src->start_time);
     if (src->end_time)
     {
@@ -207,12 +207,12 @@ void    show_size(int type)
 
     i = 0;
     ee = 0;
-    if (g_all->g_stack == NULL)
+    if (g_stack == NULL)
         return ;
-    src = g_all->g_stack;
-    while (src != g_all->g_stack)
-        src = g_all->g_stack;
-    while (src != NULL && i < g_all->stack_size)
+    src = g_stack;
+    while (src != g_stack)
+        src = g_stack;
+    while (src != NULL && i < stack_size)
     {
         if (src->ptr != 0)
         {

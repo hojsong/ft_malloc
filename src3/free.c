@@ -6,7 +6,7 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:02:03 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/24 20:19:02 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/08/22 07:16:24 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 
     idx = 0;
 	if (ptr == src)
-        idx = src->size;
+	{
+        munmap(src, src->size);
+		return ;
+	}
 	else
 	{
 		idx = ptr - src->ptr;
@@ -87,6 +90,7 @@ void	m_ft_replace(void *ptr, t_st *src, t_st *dest, char *str)
 			size = getpagesize() * SMALL_PAGE;
 		else
 			size = resize(src->size + sizeof(t_st), getpagesize());
+		// write(1, "struct distroy\n", 15);
 		munmap(src, size);
 		src = NULL;
 	}

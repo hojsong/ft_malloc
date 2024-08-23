@@ -39,6 +39,9 @@
         "malloc3.h": "c",
         "malloc_bonus.h": "c",
         "resource.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "malloc_bonus3.h": "c",
+        "malloc_bonus2.h": "c",
+        "pthread.h": "c"
     }
 }

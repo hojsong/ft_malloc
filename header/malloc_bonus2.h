@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc_bonus.h                                     :+:      :+:    :+:   */
+/*   malloc_bonus2.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:41:01 by hojsong           #+#    #+#             */
-/*   Updated: 2024/08/23 13:35:37 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/08/23 13:47:46 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MALLOC_BONUS_H
-# define MALLOC_BONUS_H
+#ifndef MALLOC_BONUS2_H
+# define MALLOC_BONUS2_H
 
 # include <sys/mman.h>
 # include <unistd.h>
@@ -23,7 +23,7 @@
 # define TINY_SIZE	 128
 # define SMALL_SIZE  2048
 # define TINY_PAGE	 4
-# define SMALL_PAGE  55
+# define SMALL_PAGE  21
 
 typedef struct m_struct{
 	void			*ptr;

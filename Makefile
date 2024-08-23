@@ -4,21 +4,9 @@ LINK_NAME = libft_malloc.so
 LIBFT_DIR = ./libft
 
 # SRC_DIR = ./src
-# SRC_FILES = ft_malloc.c \
-# 			ft_tst_util.c \
-# 			ft_tst_util2.c \
-# 			ft_tst_util3.c \
-# 			ft_tst_util4.c \
-# 			show_util.c \
-
 # SRC_DIR = ./src2
-# SRC_FILES = malloc.c \
-# 			free.c \
-# 			show_alloc_mem.c \
-# 			realloc.c \
-# 			util.c \
-
 SRC_DIR = 	./src3
+
 SRC_FILES = malloc.c \
 			free.c \
 			show_alloc_mem.c \
@@ -26,15 +14,9 @@ SRC_FILES = malloc.c \
 			util.c \
 
 # SRC_BONUS_DIR = 	./src_bonus
-# SRC_BONUS_FILES =	malloc_bonus.c \
-# 					free_bonus.c \
-# 					show_alloc_mem_bonus.c \
-# 					realloc_bonus.c \
-# 					util_bonus.c \
-# 					show_alloc_mem_ex_bonus.c \
-
-
 SRC_BONUS_DIR = 	./src2_bonus
+# SRC_BONUS_DIR = 	./src3_bonus
+
 SRC_BONUS_FILES =	malloc_bonus.c \
 					free_bonus.c \
 					show_alloc_mem_bonus.c \
@@ -82,9 +64,9 @@ SRC_BO = $(addprefix $(SRC_BONUS_DIR)/,$(SRC_BONUS_FILES))
 LIBFT_SRC = $(addprefix $(LIBFT_DIR)/,$(LIBFT_FILES))
 OBJ = $(SRC:.c=.o) $(LIBFT_SRC:.c=.o)
 OBJ_BO = $(SRC_BO:.c=.o) $(LIBFT_SRC:.c=.o)
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
-# -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 # HOSTTYPE 환경 변수 확인 및 설정
 ifeq ($(HOSTTYPE),)
@@ -107,7 +89,7 @@ endif
 
 all: $(NAME_CUR)
 	chmod 777 $(NAME_CUR)
-	$(CC) $(CFLAGS) -o $(MAIN_CUR) main.c -L. -lft_malloc
+	$(CC) $(CFLAGS) -o $(OUT_CUR) $(MAIN_CUR) -L. -lft_malloc
 
 $(NAME_CUR): $(OBJ_CUR)
 	$(CC) $(CFLAGS) -shared -o $(NAME_CUR) $(OBJ_CUR)

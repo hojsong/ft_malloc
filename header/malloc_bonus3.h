@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc_bonus.h                                     :+:      :+:    :+:   */
+/*   malloc_bonus3.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:41:01 by hojsong           #+#    #+#             */
-/*   Updated: 2024/08/23 13:35:37 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/08/23 13:43:40 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MALLOC_BONUS_H
-# define MALLOC_BONUS_H
+#ifndef MALLOC_BONUS3_H
+# define MALLOC_BONUS3_H
 
 # include <sys/mman.h>
 # include <unistd.h>
@@ -23,7 +23,7 @@
 # define TINY_SIZE	 128
 # define SMALL_SIZE  2048
 # define TINY_PAGE	 4
-# define SMALL_PAGE  55
+# define SMALL_PAGE  91
 
 typedef struct m_struct{
 	void			*ptr;
@@ -55,9 +55,17 @@ typedef struct m_structa{
 	struct m_structa	*next;
 }	t_sta;
 
+// typedef struct m_glo{
+// 	t_sta			*g_all;
+// 	pthread_mutex_t	g_gardner;
+// 	t_stack     	*g_stack;
+// 	size_t			stack_size;
+// } t_glo;
+
+// t_glo		g_global;
 t_sta			*g_all;
-t_stack         *g_stack;
 pthread_mutex_t	g_gardner;
+t_stack     	*g_stack;
 size_t			stack_size;
 
 void	init_lcok(void);

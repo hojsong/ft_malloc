@@ -6,11 +6,11 @@
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:57 by hojsong           #+#    #+#             */
-/*   Updated: 2024/05/24 20:19:46 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/08/23 13:16:05 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc_bonus.h"
+#include "../header/malloc_bonus2.h"
 
 void	*fail_map(t_st *src, size_t size)
 {
@@ -210,7 +210,6 @@ void	*malloc(size_t size)
 		size2 = sizeof(t_sta);
 		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
-		g_all->stack_size = 0;
 	}
 	m = size_of_return(size);
 	if (m == NULL)

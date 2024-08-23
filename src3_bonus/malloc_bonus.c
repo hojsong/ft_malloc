@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   malloc_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hojsong <hojsong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:01:57 by hojsong           #+#    #+#             */
-/*   Updated: 2024/08/22 07:21:17 by hojsong          ###   ########.fr       */
+/*   Updated: 2024/08/23 13:30:13 by hojsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/malloc3.h"
-
-t_sta	*g_all;
+#include "../header/malloc_bonus3.h"
 
 void	*fail_map(t_st *src, size_t size)
 {
@@ -79,7 +77,6 @@ t_st	*newlst(size_t size, size_t ma)
 	size_t	m_size;
 	size_t	x;
 
-	// write(1, "new Struct\n", 12);
 	m_size = resize(sizeof(t_st) + size, getpagesize() * ma);
 	ptr = mmap(0, m_size, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
@@ -191,9 +188,9 @@ void	*find_mem(t_st *src, size_t size)
 		dest = m->next;
 	}
 	if (size <= TINY_SIZE)
-		m->next = newlst(size, TINY_PAGE);
+		m->next = newlst(size, 4);
 	else
-		m->next = newlst(size, SMALL_PAGE);
+		m->next = newlst(size, 21);
 	if (m->next == NULL)
 		return (NULL);
 	return (m->next->ptr);
@@ -207,9 +204,10 @@ void	*malloc(size_t size)
 
 	if (size <= 0)
 		return (NULL);
-	if (g_all == NULL)
+	init_lcok();
+	while (g_all == NULL || g_all == MAP_FAILED)
 	{
-		size2 = resize(sizeof(t_sta), getpagesize());
+		size2 = sizeof(t_sta);
 		g_all = mmap(0, size2, PROT_READ | PROT_WRITE, \
 		MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
 	}
@@ -223,11 +221,21 @@ void	*malloc(size_t size)
 		else
 			m = t_stinit(size);
 		if (m)
+		{
+			malloc_lst(m->ptr, size);
+			pthread_mutex_unlock(&g_gardner);
 			return (m->ptr);
+		}
 		else
+		{
+			pthread_mutex_unlock(&g_gardner);
 			return (NULL);
+		}
 	}
 	ptr = find_mem(m, size);
+	if (ptr)
+		malloc_lst(ptr, size);
+	pthread_mutex_unlock(&g_gardner);
 	return (ptr);
 }
 
